@@ -1,0 +1,50 @@
+html {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10vw;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #3c210c;
+}
+
+body {
+  background-image: url("img/bg.jpg");
+  background-size: cover;
+  margin: 5%;
+}
+
+#loadingLife {
+  max-height: 100px;
+  max-width: 100px; 
+}
+
+h5 {
+  font-style: italic;
+}
+
+.fuckingHomepage {
+  float: right;
+}
+
+.listItem { 
+  padding: 5px;
+  border: 3px solid #3c210c;
+  border-radius: 3px;
+  max-width: 350px;
+  margin: 3px;
+}
+
+.isChecked {
+  background-color:  #2b9905;
+}
+
+input[type=checkbox] {
+  width: 14px;
+  height: 14px;
+  margin: auto;
+  background: #3c210c;
+  background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border-radius: 50px;
+
+}
