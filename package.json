@@ -1,0 +1,48 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "node_modules/webpack/bin/webpack.js",
+    "watch": "node_modules/webpack/bin/webpack.js --watch",
+    "serve": "node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --watch",
+
+    "browser-sync": "browser-sync start --server --files *.html *.css *.js",
+    "dev": "npm-run-all --parallel watch browser-sync"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.6",
+    "css-loader": "^0.28.9",
+    "extract-loader": "^1.0.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
+    "live-server": "^1.2.0",
+    "npm-run-all": "^4.1.2",
+    "style-loader": "^0.20.1",
+    "stylelint": "^8.4.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olafur-palsson/reactHomePage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/olafur-palsson/reactHomePage/issues"
+  },
+  "homepage": "https://github.com/olafur-palsson/reactHomePage#readme",
+  "description": ""
+}
