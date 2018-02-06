@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-image: url("img/bg.jpg");
+  background-image: url(./f9ee01e509f0c5973f4d4bf2ab0200fa.jpg);
   background-size: cover;
   margin: 5%;
 }
@@ -50,3 +50,5 @@ input[type=checkbox] {
   border-radius: 50px;
 
 }
+
+/*# sourceMappingURL=styles.css.map*/
