@@ -2,9 +2,38 @@ import "../styles.css"
 import ReactDOM from "react-dom"
 import React from "react"
 import TestContainer from "./components/container/TestContainer"
+import Body from "./Body"
 
-const el = document.createElement("div")
-el.innerHTML = "This is my shiiii"
-document.body.appendChild(el)
-const appDiv = document.querySelector(".REACT")
-ReactDOM.render(<TestContainer />, appDiv)
+
+
+
+
+class Application extends React.Component {
+  render() {
+    return <Body />
+  }
+}
+
+
+const location = document.querySelector("#app")
+const app = <Application />
+ReactDOM.render(app, location)
+
+
+/*
+<div class="study-list">
+  <h3>Skóli</h3>
+</div>
+<div class="longTerm"></div>
+
+<div class="life-list">
+  <h3>Life</h3>
+  <img id="loadingLife" src="http://www.ifmo.ru/images/loader.gif">
+</div>
+
+
+<div id="app" class="REACT">
+
+</div>
+
+*/

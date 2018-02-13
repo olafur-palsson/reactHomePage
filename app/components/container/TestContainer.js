@@ -27,7 +27,7 @@ class TestContainer extends Component {
           id="seo_title"
           value={seo_title}
           handleChange={this.handleChange}
-        />
+        ></Input>
       </form>
     );
   }
