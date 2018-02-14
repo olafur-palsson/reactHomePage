@@ -10,7 +10,7 @@ import Body from "./Body"
 
 class Application extends React.Component {
   render() {
-    return <Body />
+    return (<Body />)
   }
 }
 
