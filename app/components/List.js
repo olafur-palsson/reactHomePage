@@ -2,49 +2,36 @@ import React from "react";
 import ListItem from "./ListItem"
 
 export default class List extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props.listData)
-    this.getName = this.getName.bind(this)
-    this.renderListItems = this.renderListItems.bind(this)
-  }
 
-  getName() {
-    return this.props.listData.$name
-  }
+  li(listItemSetup, key){
+    return <ListItem
+        key              = {key}
+        name             = {listItemSetup.name}
+        default          = {listItemSetup.default}
+        lastStatusUpdate = {listItemSetup.since}
+        storageStatus    = {listItemSetup.status}
+        path             = {this.props.path + "." + key}
+      />
+    }
 
   renderListItems() {
     const regex = /^[$]/
     const setupData = this.props.listData
-    console.log("setupData:")
-    console.log(setupData)
-    let arrayOfListItems = []
+    let li_Array = []
 
     for(let key in setupData) {
       if(key.match(regex)) continue
-      const listItemSetup = setupData[key]
-      console.log(listItemSetup)
-      console.log(this.props)
-      arrayOfListItems.push(
-
-        <ListItem
-          key=           {key}
-          name=          {listItemSetup.name}
-          default=       {listItemSetup.default}
-          storageSince=  {listItemSetup.since}
-          storageStatus= {listItemSetup.status}
-          path=          {this.props.path + "." + key}
-        />
-      )
+      const setup = setupData[key]
+      li_Array.push(this.li(setup, key))
     }
 
-    return arrayOfListItems
+    return li_Array
   }
 
   render() {
     return(
       <div className="todoList">
-          <h1>{this.getName()}</h1>
+          <h1>{this.props.listData.$name}</h1>
           <ol>
             {this.renderListItems()}
           </ol>

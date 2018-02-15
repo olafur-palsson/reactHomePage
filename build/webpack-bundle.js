@@ -1039,20 +1039,22 @@ var Database = function () {
     }
 
     /** THE UPDATE DATABASE FUNCTION, very powerful
-     * @param {string} docPath    Firebase path to use with firestore().doc()
-     * @param {string} objectPath Where we in the object we need to inject the value
-     */
+      * @param {string} docPath    Firebase path to use with firestore().doc()
+      * @param {string} objectPath Where we in the object we need to inject
+      the value
+      */
 
   }, {
     key: "update",
     value: function update(docPath, objectPath, value, debuglog) {
       var _this = this;
 
-      if (debuglog) console.log("Dacument Path: " + docPath + ", Object Path: " + objectPath + ", Value: " + value);
+      if (debuglog) console.log("Dacument Path: " + docPath + ",\n                              Object Path: " + objectPath + ",\n                              Value: " + value);
+
       var docPromise = this.fstore.doc(docPath).get();
       docPromise.then(function (doc) {
         var data = doc.data();
-        var navigator = data;
+        var navigator = data; //setja navigatorinn efst í skjalið
         var path = objectPath.split(".");
         while (path.length > 1) {
           navigator = navigator[path.shift()];
@@ -19273,10 +19275,8 @@ var Body = function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      console.log(lists);
       lists.then(function (doc) {
         var data = doc.data();
-        console.log(data);
         _this2.setState({ data: data });
       });
     }
@@ -19284,10 +19284,7 @@ var Body = function (_React$Component) {
     key: "renderAsyncList",
     value: function renderAsyncList() {
       var array = [];
-      console.log(this.state.data);
       for (var listName in this.state.data) {
-        console.log(listName);
-        console.log(this.state.data[listName]);
         array.push(_react2.default.createElement(_List2.default, {
           key: listName,
           path: listName,
@@ -19345,47 +19342,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var List = function (_React$Component) {
   _inherits(List, _React$Component);
 
-  function List(props) {
+  function List() {
     _classCallCheck(this, List);
 
-    var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
-
-    console.log(_this.props.listData);
-    _this.getName = _this.getName.bind(_this);
-    _this.renderListItems = _this.renderListItems.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
   }
 
   _createClass(List, [{
-    key: "getName",
-    value: function getName() {
-      return this.props.listData.$name;
+    key: "li",
+    value: function li(listItemSetup, key) {
+      return _react2.default.createElement(_ListItem2.default, {
+        key: key,
+        name: listItemSetup.name,
+        "default": listItemSetup.default,
+        lastStatusUpdate: listItemSetup.since,
+        storageStatus: listItemSetup.status,
+        path: this.props.path + "." + key
+      });
     }
   }, {
     key: "renderListItems",
     value: function renderListItems() {
       var regex = /^[$]/;
       var setupData = this.props.listData;
-      console.log("setupData:");
-      console.log(setupData);
-      var arrayOfListItems = [];
+      var li_Array = [];
 
       for (var key in setupData) {
         if (key.match(regex)) continue;
-        var listItemSetup = setupData[key];
-        console.log(listItemSetup);
-        console.log(this.props);
-        arrayOfListItems.push(_react2.default.createElement(_ListItem2.default, {
-          key: key,
-          name: listItemSetup.name,
-          "default": listItemSetup.default,
-          storageSince: listItemSetup.since,
-          storageStatus: listItemSetup.status,
-          path: this.props.path + "." + key
-        }));
+        var setup = setupData[key];
+        li_Array.push(this.li(setup, key));
       }
 
-      return arrayOfListItems;
+      return li_Array;
     }
   }, {
     key: "render",
@@ -19396,7 +19384,7 @@ var List = function (_React$Component) {
         _react2.default.createElement(
           "h1",
           null,
-          this.getName()
+          this.props.listData.$name
         ),
         _react2.default.createElement(
           "ol",
@@ -19422,8 +19410,6 @@ exports.default = List;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19453,23 +19439,26 @@ var ListItem = function (_React$Component) {
 
     _this.state = {};
     _this.Database = new _Database2.default();
-    _this.state.status = _this.Database.isToday(props.storageSince) ? props.storageStatus : false;
-
-    console.log(_this.state.status);
-
-    _this.checkboxClick = _this.checkboxClick.bind(_this);
+    _this.state.status = _this.getStatusFromDb();
     return _this;
   }
 
   _createClass(ListItem, [{
+    key: "getStatusFromDb",
+    value: function getStatusFromDb() {
+      return this.Database.isToday(this.props.storageSince) ? this.props.storageStatus : false;
+    }
+  }, {
+    key: "updateDB",
+    value: function updateDB(path, value) {
+      this.Database.update(this.Database.paths.lists, path, value, /*debug*/true);
+    }
+  }, {
     key: "checkboxClick",
     value: function checkboxClick(e) {
-      this.setState({
-        status: !this.state.status
-      });
-      console.log(_typeof(this.state.status));
-      this.Database.update(this.Database.paths.lists, this.props.path + ".status", this.state.status, true);
-      this.Database.update(this.Database.paths.lists, this.props.path + ".since", this.Database.getDateString(), true);
+      this.setState({ status: !this.state.status });
+      this.updateDB(this.props.path + ".status", this.state.status);
+      this.updateDB(this.props.path + ".since", this.Database.getDateString());
     }
   }, {
     key: "render",
@@ -19480,7 +19469,12 @@ var ListItem = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: "listItem" },
-          _react2.default.createElement("input", { onChange: this.checkboxClick, type: "checkbox", checked: this.state.status, value: this.state.status }),
+          _react2.default.createElement("input", {
+            onChange: this.checkboxClick.bind(this),
+            type: "checkbox",
+            checked: this.state.status,
+            value: this.state.status
+          }),
           this.props.name
         )
       );

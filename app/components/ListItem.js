@@ -7,28 +7,34 @@ export default class ListItem extends React.Component {
     super(props)
     this.state              = {}
     this.Database           = new Database()
-    this.state.status = (this.Database.isToday(props.storageSince)) ?
-      props.storageStatus : false
+    this.state.status       = (this.getStatusFromDb())
+  }
 
-    console.log(this.state.status)
+  getStatusFromDb() {
+    return this.Database.isToday(this.props.storageSince) ?
+      this.props.storageStatus : false
+  }
 
-    this.checkboxClick      = this.checkboxClick.bind(this)
+  updateDB(path, value) {
+    this.Database.update(this.Database.paths.lists, path, value, /*debug*/ true)
   }
 
   checkboxClick(e) {
-    this.setState({
-      status: !this.state.status
-    })
-    console.log(typeof this.state.status)
-    this.Database.update(this.Database.paths.lists, this.props.path + ".status", this.state.status, true)
-    this.Database.update(this.Database.paths.lists, this.props.path + ".since", this.Database.getDateString(), true)
+    this.setState({ status: !this.state.status })
+    this.updateDB(this.props.path + ".status", this.state.status)
+    this.updateDB(this.props.path + ".since",  this.Database.getDateString())
   }
 
   render() {
     return (
       <li>
         <div className="listItem">
-          <input onChange={this.checkboxClick} type="checkbox" checked={this.state.status} value={this.state.status} />
+          <input
+            onChange={this.checkboxClick.bind(this)}
+            type="checkbox"
+            checked={this.state.status}
+            value={this.state.status}
+          />
           {this.props.name}
         </div>
       </li>

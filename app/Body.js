@@ -21,20 +21,15 @@ export default class Body extends React.Component {
   }
 
   componentWillMount() {
-    console.log(lists)
     lists.then(doc => {
       const data = doc.data()
-      console.log(data)
       this.setState({data})
     })
   }
 
   renderAsyncList() {
     let array = []
-    console.log(this.state.data)
     for(let listName in this.state.data) {
-      console.log(listName)
-      console.log(this.state.data[listName])
       array.push(<List
         key ={listName}
         path={listName}

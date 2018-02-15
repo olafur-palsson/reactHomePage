@@ -13,7 +13,8 @@ class Database {
 
   getDateString() {
     let date = new Date()
-    let str = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    let str = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`
 
     return str
   }
@@ -23,16 +24,20 @@ class Database {
     return false
   }
 
-   /** THE UPDATE DATABASE FUNCTION, very powerful
-    * @param {string} docPath    Firebase path to use with firestore().doc()
-    * @param {string} objectPath Where we in the object we need to inject the value
-    */
+/** THE UPDATE DATABASE FUNCTION, very powerful
+  * @param {string} docPath    Firebase path to use with firestore().doc()
+  * @param {string} objectPath Where we in the object we need to inject
+  the value
+  */
   update(docPath, objectPath, value, debuglog) {
-    if(debuglog) console.log(`Dacument Path: ${docPath}, Object Path: ${objectPath}, Value: ${value}`)
+    if(debuglog) console.log(`Dacument Path: ${docPath},
+                              Object Path: ${objectPath},
+                              Value: ${value}`)
+
     const docPromise = this.fstore.doc(docPath).get()
     docPromise.then(doc => {
       let data = doc.data()
-      let navigator = data
+      let navigator = data //setja navigatorinn efst í skjalið
       let path = objectPath.split(".")
       while(path.length > 1)
         navigator = navigator[path.shift()]
@@ -55,9 +60,9 @@ class Database {
     this.paths         = paths
     this.documents     = {}
     this.fstore        = firebase.firestore()
-    this.getLists      = this.getLists.bind(this)
-    this.update        = this.update.bind(this)
-    this.isToday       = this.isToday.bind(this)
+    this.getLists      = this.getLists     .bind(this)
+    this.update        = this.update       .bind(this)
+    this.isToday       = this.isToday      .bind(this)
     this.getDateString = this.getDateString.bind(this)
   }
 }
