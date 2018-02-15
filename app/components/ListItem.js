@@ -1,5 +1,5 @@
-import React from "react"
-import Database from "../Database"
+import React from 'react'
+import Database from '../Database'
 
 
 export default class ListItem extends React.Component {
@@ -10,28 +10,44 @@ export default class ListItem extends React.Component {
     this.state.status       = (this.getStatusFromDb())
   }
 
-  getStatusFromDb() {
-    return this.Database.isToday(this.props.storageSince) ?
-      this.props.storageStatus : false
+  componentWillMount() {
+    this.setClass(this.state.status)
   }
 
-  updateDB(path, value) {
-    this.Database.update(this.Database.paths.lists, path, value, /*debug*/ true)
+  getStatusFromDb() {
+    console.log(`Maybe this helps ${this.props.name} and ${this.props.lastStatus}`)
+
+    const isOK = this.Database.isToday(this.props.lastStatusUpdate) ?
+      this.props.lastStatus : false
+    return isOK || this.props.default
+  }
+
+  updateDB(thePath, theValuealue) {
+    this.Database.update(this.Database.paths.lists, thePath, theValuealue)
+  }
+
+  setClass(isChecked) {
+    const checked = isChecked ? ' isChecked':''
+    console.log(checked)
+    this.setState({class: 'listItem' + checked})
   }
 
   checkboxClick(e) {
-    this.setState({ status: !this.state.status })
-    this.updateDB(this.props.path + ".status", this.state.status)
-    this.updateDB(this.props.path + ".since",  this.Database.getDateString())
+    const notStatus = !this.state.status
+    console.log(notStatus)
+    this.setState({ status: notStatus })
+    this.updateDB(this.props.path + '.status', notStatus)
+    this.updateDB(this.props.path + '.since',  this.Database.getDateString())
+    this.setClass(notStatus)
   }
 
   render() {
     return (
       <li>
-        <div className="listItem">
+        <div className={this.state.class}>
           <input
-            onChange={this.checkboxClick.bind(this)}
-            type="checkbox"
+            onClick={this.checkboxClick.bind(this)}
+            type='checkbox'
             checked={this.state.status}
             value={this.state.status}
           />

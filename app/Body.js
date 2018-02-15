@@ -10,10 +10,8 @@ console.log(lists)
 export default class Body extends React.Component {
   constructor() {
     super()
-    this.bindToDOM = this.bindToDOM.bind(this)
     this.renderAsyncList = this.renderAsyncList.bind(this)
-    this.state = {}
-    this.state.data = {}
+    this.state = {data: {}}
   }
 
   componentWillMount() {

@@ -1034,8 +1034,8 @@ var Database = function () {
   }, {
     key: "isToday",
     value: function isToday(dateString) {
-      if (dateString == this.getDateString()) return true;
-      return false;
+      console.log(dateString + " and " + this.getDateString() + " gives us " + (dateString == this.getDateString()));
+      return dateString == this.getDateString();
     }
 
     /** THE UPDATE DATABASE FUNCTION, very powerful
@@ -1148,24 +1148,6 @@ var Application = function (_React$Component) {
 var location = document.querySelector("#app");
 var app = _react2.default.createElement(Application, null);
 _reactDom2.default.render(app, location);
-
-/*
-<div class="study-list">
-  <h3>Skóli</h3>
-</div>
-<div class="longTerm"></div>
-
-<div class="life-list">
-  <h3>Life</h3>
-  <img id="loadingLife" src="http://www.ifmo.ru/images/loader.gif">
-</div>
-
-
-<div id="app" class="REACT">
-
-</div>
-
-*/
 
 /***/ }),
 /* 18 */
@@ -19258,19 +19240,12 @@ var Body = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this));
 
-    _this.bindToDOM = _this.bindToDOM.bind(_this);
     _this.renderAsyncList = _this.renderAsyncList.bind(_this);
-    _this.state = {};
-    _this.state.data = {};
+    _this.state = { data: {} };
     return _this;
   }
 
   _createClass(Body, [{
-    key: "bindToDOM",
-    value: function bindToDOM(element) {
-      ReactDOM.render(element.render(), document.getElementById("app"));
-    }
-  }, {
     key: "componentWillMount",
     value: function componentWillMount() {
       var _this2 = this;
@@ -19281,15 +19256,16 @@ var Body = function (_React$Component) {
       });
     }
   }, {
+    key: "list",
+    value: function list(name) {
+      return _react2.default.createElement(_List2.default, { key: name, path: name, listData: this.state.data[name] });
+    }
+  }, {
     key: "renderAsyncList",
     value: function renderAsyncList() {
       var array = [];
       for (var listName in this.state.data) {
-        array.push(_react2.default.createElement(_List2.default, {
-          key: listName,
-          path: listName,
-          listData: this.state.data[listName]
-        }));
+        array.push(this.list(listName));
       }
       return array;
     }
@@ -19356,7 +19332,7 @@ var List = function (_React$Component) {
         name: listItemSetup.name,
         "default": listItemSetup.default,
         lastStatusUpdate: listItemSetup.since,
-        storageStatus: listItemSetup.status,
+        lastStatus: listItemSetup.status,
         path: this.props.path + "." + key
       });
     }
@@ -19444,34 +19420,52 @@ var ListItem = function (_React$Component) {
   }
 
   _createClass(ListItem, [{
-    key: "getStatusFromDb",
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setClass(this.state.status);
+    }
+  }, {
+    key: 'getStatusFromDb',
     value: function getStatusFromDb() {
-      return this.Database.isToday(this.props.storageSince) ? this.props.storageStatus : false;
+      console.log('Maybe this helps ' + this.props.name + ' and ' + this.props.lastStatus);
+
+      var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
+      return isOK || this.props.default;
     }
   }, {
-    key: "updateDB",
-    value: function updateDB(path, value) {
-      this.Database.update(this.Database.paths.lists, path, value, /*debug*/true);
+    key: 'updateDB',
+    value: function updateDB(thePath, theValuealue) {
+      this.Database.update(this.Database.paths.lists, thePath, theValuealue);
     }
   }, {
-    key: "checkboxClick",
+    key: 'setClass',
+    value: function setClass(isChecked) {
+      var checked = isChecked ? ' isChecked' : '';
+      console.log(checked);
+      this.setState({ class: 'listItem' + checked });
+    }
+  }, {
+    key: 'checkboxClick',
     value: function checkboxClick(e) {
-      this.setState({ status: !this.state.status });
-      this.updateDB(this.props.path + ".status", this.state.status);
-      this.updateDB(this.props.path + ".since", this.Database.getDateString());
+      var notStatus = !this.state.status;
+      console.log(notStatus);
+      this.setState({ status: notStatus });
+      this.updateDB(this.props.path + '.status', notStatus);
+      this.updateDB(this.props.path + '.since', this.Database.getDateString());
+      this.setClass(notStatus);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "li",
+        'li',
         null,
         _react2.default.createElement(
-          "div",
-          { className: "listItem" },
-          _react2.default.createElement("input", {
-            onChange: this.checkboxClick.bind(this),
-            type: "checkbox",
+          'div',
+          { className: this.state.class },
+          _react2.default.createElement('input', {
+            onClick: this.checkboxClick.bind(this),
+            type: 'checkbox',
             checked: this.state.status,
             value: this.state.status
           }),

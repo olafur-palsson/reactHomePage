@@ -20,8 +20,8 @@ class Database {
   }
 
   isToday(dateString) {
-    if(dateString == this.getDateString()) return true
-    return false
+    console.log(`${dateString} and ${this.getDateString()} gives us ${dateString == this.getDateString()}`)
+    return dateString == this.getDateString()
   }
 
 /** THE UPDATE DATABASE FUNCTION, very powerful

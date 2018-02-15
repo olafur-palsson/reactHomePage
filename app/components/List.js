@@ -9,7 +9,7 @@ export default class List extends React.Component {
         name             = {listItemSetup.name}
         default          = {listItemSetup.default}
         lastStatusUpdate = {listItemSetup.since}
-        storageStatus    = {listItemSetup.status}
+        lastStatus       = {listItemSetup.status}
         path             = {this.props.path + "." + key}
       />
     }
