@@ -51,9 +51,8 @@ class Database {
 
   load() {
     const downloadLists = {}
-    for(let key in paths) {
+    for(let key in paths)
        this.documents[key] = this.fstore.doc(paths[key]).get()
-    }
   }
 
   constructor() {

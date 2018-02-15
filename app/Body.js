@@ -16,10 +16,6 @@ export default class Body extends React.Component {
     this.state.data = {}
   }
 
-  bindToDOM(element) {
-    ReactDOM.render(element.render(), document.getElementById("app"))
-  }
-
   componentWillMount() {
     lists.then(doc => {
       const data = doc.data()
@@ -27,14 +23,14 @@ export default class Body extends React.Component {
     })
   }
 
+  list(name) {
+    return <List key={name} path={name} listData={this.state.data[name]} />
+  }
+
   renderAsyncList() {
     let array = []
     for(let listName in this.state.data) {
-      array.push(<List
-        key ={listName}
-        path={listName}
-        listData={this.state.data[listName]}
-      />)
+      array.push(this.list(listName))
     }
     return array
   }
