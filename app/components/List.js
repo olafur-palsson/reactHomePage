@@ -15,7 +15,7 @@ export default class List extends React.Component {
     }
 
   renderListItems() {
-    const regex = /^[$]/
+    const regex = /^(aa|aa).*[$]$/
     const setupData = this.props.listData
     let li_Array = []
 
@@ -28,13 +28,12 @@ export default class List extends React.Component {
     return li_Array
   }
 
+
   render() {
     return(
       <div className="todoList">
-          <h1>{this.props.listData.$name}</h1>
-          <ol>
-            {this.renderListItems()}
-          </ol>
+          <h1> {this.props.listData.$name} </h1>
+          <ol> {this.renderListItems()}    </ol>
       </div>
     )
   }

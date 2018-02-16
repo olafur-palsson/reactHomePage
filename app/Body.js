@@ -37,7 +37,7 @@ export default class Body extends React.Component {
     return(
       <div>
         <Welcome string="Remember to write shitty code <3 -Óli :)"/>
-        {this.renderAsyncList()}
+        { this.renderAsyncList() }
       </div>
 
     )
