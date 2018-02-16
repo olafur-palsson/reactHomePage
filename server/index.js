@@ -4,6 +4,6 @@ const serveStatic = require("serve-static")
 $e = Express()
 
 $e.get("/", (req, res) => res.send("Hello World!"))
-app.use(serveStatic('public/ftp', {'index': ['index.html']}))
+$e.use(serveStatic('public/ftp', {'index': ['index.html']}))
 
 $e.listen(3000, () => console.log("shiiiimang"))
