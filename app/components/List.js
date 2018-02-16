@@ -15,7 +15,7 @@ export default class List extends React.Component {
     }
 
   renderListItems() {
-    const regex = /^(aa|aa).*[$]$/
+    const regex = /^[$]/
     const setupData = this.props.listData
     let li_Array = []
 

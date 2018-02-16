@@ -1021,7 +1021,28 @@ var Database = function () {
   _createClass(Database, [{
     key: "getLists",
     value: function getLists() {
-      return this.fstore.doc(paths.lists).get();
+      var document = this.fstore.doc(paths.lists).get();
+      this.storeDocumentInCache(paths.lists, document);
+      return document;
+    }
+  }, {
+    key: "set",
+    value: function set(key, data) {
+      window.localStorage.setItem(key, JSON.stringify(data));
+    }
+  }, {
+    key: "get",
+    value: function get(key) {
+      return JSON.parse(window.localStorage.getItem(key));
+    }
+  }, {
+    key: "storeDocumentInCache",
+    value: function storeDocumentInCache(key, docPromise) {
+      var _this = this;
+
+      docPromise.then(function (doc) {
+        return _this.set(key, doc.data());
+      });
     }
   }, {
     key: "getDateString",
@@ -1034,7 +1055,6 @@ var Database = function () {
   }, {
     key: "isToday",
     value: function isToday(dateString) {
-      console.log(dateString + " and " + this.getDateString() + " gives us " + (dateString == this.getDateString()));
       return dateString == this.getDateString();
     }
 
@@ -1047,27 +1067,28 @@ var Database = function () {
   }, {
     key: "update",
     value: function update(docPath, objectPath, value, debuglog) {
-      var _this = this;
-
       if (debuglog) console.log("Dacument Path: " + docPath + ",\n                              Object Path: " + objectPath + ",\n                              Value: " + value);
 
-      var docPromise = this.fstore.doc(docPath).get();
-      docPromise.then(function (doc) {
-        var data = doc.data();
-        var navigator = data; //setja navigatorinn efst í skjalið
-        var path = objectPath.split(".");
-        while (path.length > 1) {
-          navigator = navigator[path.shift()];
-        }console.log(value);
-        navigator[path.shift()] = value;
-        _this.fstore.doc(docPath).set(data);
-      });
+      //breyta í dynamic update
+      var data = this.get(docPath);
+      var navigator = data; //setja navigatorinn efst í skjalið
+      var path = objectPath.split(".");
+      while (path.length > 1) {
+        navigator = navigator[path.shift()];
+        console.log(navigator);
+      }
+
+      navigator[path.shift()] = value;
+      this.set(docPath, data);
+      this.fstore.doc(docPath).set(data);
+
       return "Logging was successful";
     }
   }, {
     key: "load",
     value: function load() {
       var downloadLists = {};
+      this.getLists();
       for (var key in paths) {
         this.documents[key] = this.fstore.doc(paths[key]).get();
       }
@@ -1084,6 +1105,7 @@ var Database = function () {
     this.update = this.update.bind(this);
     this.isToday = this.isToday.bind(this);
     this.getDateString = this.getDateString.bind(this);
+    this.getLists();
   }
 
   return Database;
@@ -19360,12 +19382,16 @@ var List = function (_React$Component) {
         _react2.default.createElement(
           "h1",
           null,
-          this.props.listData.$name
+          " ",
+          this.props.listData.$name,
+          " "
         ),
         _react2.default.createElement(
           "ol",
           null,
-          this.renderListItems()
+          " ",
+          this.renderListItems(),
+          "    "
         )
       );
     }
@@ -19427,8 +19453,6 @@ var ListItem = function (_React$Component) {
   }, {
     key: 'getStatusFromDb',
     value: function getStatusFromDb() {
-      console.log('Maybe this helps ' + this.props.name + ' and ' + this.props.lastStatus);
-
       var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
       return isOK || this.props.default;
     }
@@ -19441,14 +19465,12 @@ var ListItem = function (_React$Component) {
     key: 'setClass',
     value: function setClass(isChecked) {
       var checked = isChecked ? ' isChecked' : '';
-      console.log(checked);
       this.setState({ class: 'listItem' + checked });
     }
   }, {
     key: 'checkboxClick',
     value: function checkboxClick(e) {
       var notStatus = !this.state.status;
-      console.log(notStatus);
       this.setState({ status: notStatus });
       this.updateDB(this.props.path + '.status', notStatus);
       this.updateDB(this.props.path + '.since', this.Database.getDateString());
@@ -19464,7 +19486,7 @@ var ListItem = function (_React$Component) {
           'div',
           { className: this.state.class },
           _react2.default.createElement('input', {
-            onClick: this.checkboxClick.bind(this),
+            onChange: this.checkboxClick.bind(this),
             type: 'checkbox',
             checked: this.state.status,
             value: this.state.status
