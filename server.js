@@ -5,7 +5,6 @@ $e = Express()
 
 $e.set("port", process.env.PORT || 8080)
 
-$e.get("/", (req, res) => res.sendFile("./index.html"))
-$e.use(serveStatic('./..', {'index': ['index.html']}))
+$e.use(serveStatic(__dirname))
 console.log($e.get("port"))
 $e.listen($e.get("port"))
