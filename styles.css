@@ -35,10 +35,20 @@ h5 {
   border-radius: 3px;
   max-width: 350px;
   margin: 3px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .isChecked {
   background-color:  #2b9905;
+}
+
+.displayNone {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 input[type=checkbox] {

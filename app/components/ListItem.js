@@ -20,8 +20,8 @@ export default class ListItem extends React.Component {
     return isOK || this.props.default
   }
 
-  updateDB(thePath, theValuealue) {
-    this.Database.update(this.Database.paths.lists, thePath, theValuealue)
+  updateDB(thePath, theValue) {
+    this.Database.update(this.Database.paths.lists, thePath, theValue)
   }
 
   setClass(isChecked) {
@@ -34,20 +34,28 @@ export default class ListItem extends React.Component {
     this.setState({ status: notStatus })
     this.updateDB(this.props.path + '.status', notStatus)
     this.updateDB(this.props.path + '.since',  this.Database.getDateString())
+    this.updateDB(this.props.path + '.order', this.props.orderNumber)
     this.setClass(notStatus)
   }
+
+	delete() {
+		this.updateDB(this.props.path, "DEL")
+	}
 
   render() {
     return (
       <li>
         <div className={this.state.class}>
-          <input
-            onChange={this.checkboxClick.bind(this)}
-            type='checkbox'
-            checked={this.state.status}
-            value={this.state.status}
-          />
-          {this.props.name}
+          <div>
+            <input
+              onChange={this.checkboxClick.bind(this)}
+              type='checkbox'
+              checked={this.state.status}
+              value={this.state.status}
+            />
+            {this.props.name}
+          </div>
+				  <button onClick={this.delete.bind(this)}> Del </button>
         </div>
       </li>
     )

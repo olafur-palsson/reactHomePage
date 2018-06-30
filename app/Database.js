@@ -1,9 +1,12 @@
 
 
 
-
 const paths = {
   lists: "homepageSetup/listOfLists"
+}
+
+const prototype = {
+
 }
 
 class Database {
@@ -29,7 +32,6 @@ class Database {
     let date = new Date()
     let str = `${date.getFullYear()}-${date.getMonth() +
       1}-${date.getDate()}`
-
     return str
   }
 
@@ -37,29 +39,25 @@ class Database {
     return dateString == this.getDateString()
   }
 
-/** THE UPDATE DATABASE FUNCTION, very powerful
-  * @param {string} docPath    Firebase path to use with firestore().doc()
-  * @param {string} objectPath Where we in the object we need to inject
-  the value
-  */
-  update(docPath, objectPath, value, debuglog) {
-    if(debuglog) console.log(`Dacument Path: ${docPath},
-                              Object Path: ${objectPath},
-                              Value: ${value}`)
-
+  //objectPath is on form "blabla.key1.key2"
+  update(docPath, objectPath, keyValue) {
     //breyta í dynamic update
+		
     let data = this.get(docPath)
     let navigator = data //setja navigatorinn efst í skjalið
     let path = objectPath.split(".")
-    while(path.length > 1) {
+    while(path.length > 1)
         navigator = navigator[path.shift()]
-        console.log(navigator)
-    }
 
-    navigator[path.shift()] = value
+		let leafKey = path.shift()
+		if(keyValue == "DEL") {
+			delete navigator[leafKey]
+			console.log("Deleting was successful")
+		} else {
+    	navigator[leafKey] = keyValue
+		}
     this.set(docPath, data)
     this.fstore.doc(docPath).set(data)
-
     return "Logging was successful"
   }
 

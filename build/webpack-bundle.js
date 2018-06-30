@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "./build";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(20);
-} else {
   module.exports = __webpack_require__(21);
+} else {
+  module.exports = __webpack_require__(22);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -685,9 +685,9 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(19);
+  module.exports = __webpack_require__(20);
 } else {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(25);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -941,7 +941,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(22);
+var isTextNode = __webpack_require__(23);
 
 /*eslint-disable no-bitwise */
 
@@ -1011,11 +1011,128 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Database = __webpack_require__(17);
+
+var _Database2 = _interopRequireDefault(_Database);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ListItem = function (_React$Component) {
+  _inherits(ListItem, _React$Component);
+
+  function ListItem(props) {
+    _classCallCheck(this, ListItem);
+
+    var _this = _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+
+    _this.state = {};
+    _this.Database = new _Database2.default();
+    _this.state.status = _this.getStatusFromDb();
+    return _this;
+  }
+
+  _createClass(ListItem, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setClass(this.state.status);
+    }
+  }, {
+    key: 'getStatusFromDb',
+    value: function getStatusFromDb() {
+      var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
+      return isOK || this.props.default;
+    }
+  }, {
+    key: 'updateDB',
+    value: function updateDB(thePath, theValue) {
+      this.Database.update(this.Database.paths.lists, thePath, theValue);
+    }
+  }, {
+    key: 'setClass',
+    value: function setClass(isChecked) {
+      var checked = isChecked ? ' isChecked' : '';
+      this.setState({ class: 'listItem' + checked });
+    }
+  }, {
+    key: 'checkboxClick',
+    value: function checkboxClick(e) {
+      var notStatus = !this.state.status;
+      this.setState({ status: notStatus });
+      this.updateDB(this.props.path + '.status', notStatus);
+      this.updateDB(this.props.path + '.since', this.Database.getDateString());
+      this.updateDB(this.props.path + '.order', this.props.orderNumber);
+      this.setClass(notStatus);
+    }
+  }, {
+    key: 'delete',
+    value: function _delete() {
+      this.updateDB(this.props.path, "DEL");
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: this.state.class },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              onChange: this.checkboxClick.bind(this),
+              type: 'checkbox',
+              checked: this.state.status,
+              value: this.state.status
+            }),
+            this.props.name
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.delete.bind(this) },
+            ' Del '
+          )
+        )
+      );
+    }
+  }]);
+
+  return ListItem;
+}(_react2.default.Component);
+
+exports.default = ListItem;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var paths = {
   lists: "homepageSetup/listOfLists"
 };
+
+var prototype = {};
 
 var Database = function () {
   _createClass(Database, [{
@@ -1049,7 +1166,6 @@ var Database = function () {
     value: function getDateString() {
       var date = new Date();
       var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
       return str;
     }
   }, {
@@ -1058,30 +1174,27 @@ var Database = function () {
       return dateString == this.getDateString();
     }
 
-    /** THE UPDATE DATABASE FUNCTION, very powerful
-      * @param {string} docPath    Firebase path to use with firestore().doc()
-      * @param {string} objectPath Where we in the object we need to inject
-      the value
-      */
+    //objectPath is on form "blabla.key1.key2"
 
   }, {
     key: "update",
-    value: function update(docPath, objectPath, value, debuglog) {
-      if (debuglog) console.log("Dacument Path: " + docPath + ",\n                              Object Path: " + objectPath + ",\n                              Value: " + value);
-
+    value: function update(docPath, objectPath, keyValue) {
       //breyta í dynamic update
+
       var data = this.get(docPath);
       var navigator = data; //setja navigatorinn efst í skjalið
       var path = objectPath.split(".");
       while (path.length > 1) {
         navigator = navigator[path.shift()];
-        console.log(navigator);
+      }var leafKey = path.shift();
+      if (keyValue == "DEL") {
+        delete navigator[leafKey];
+        console.log("Deleting was successful");
+      } else {
+        navigator[leafKey] = keyValue;
       }
-
-      navigator[path.shift()] = value;
       this.set(docPath, data);
       this.fstore.doc(docPath).set(data);
-
       return "Logging was successful";
     }
   }, {
@@ -1114,7 +1227,7 @@ var Database = function () {
 exports.default = Database;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1122,7 +1235,7 @@ exports.default = Database;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(18);
+__webpack_require__(19);
 
 var _reactDom = __webpack_require__(9);
 
@@ -1132,11 +1245,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TestContainer = __webpack_require__(29);
+var _TestContainer = __webpack_require__(30);
 
 var _TestContainer2 = _interopRequireDefault(_TestContainer);
 
-var _Body = __webpack_require__(34);
+var _Body = __webpack_require__(35);
 
 var _Body2 = _interopRequireDefault(_Body);
 
@@ -1172,13 +1285,13 @@ var app = _react2.default.createElement(Application, null);
 _reactDom2.default.render(app, location);
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1414,7 +1527,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1442,7 +1555,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2807,7 +2920,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2822,7 +2935,7 @@ module.exports = react;
  * @typechecks
  */
 
-var isNode = __webpack_require__(23);
+var isNode = __webpack_require__(24);
 
 /**
  * @param {*} object The object to check.
@@ -2835,7 +2948,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2863,7 +2976,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2897,8 +3010,8 @@ var containsNode = __webpack_require__(14);
 var focusNode = __webpack_require__(15);
 var emptyObject = __webpack_require__(5);
 var checkPropTypes = __webpack_require__(7);
-var hyphenateStyleName = __webpack_require__(25);
-var camelizeStyleName = __webpack_require__(27);
+var hyphenateStyleName = __webpack_require__(26);
+var camelizeStyleName = __webpack_require__(28);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18265,7 +18378,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18280,7 +18393,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(26);
+var hyphenate = __webpack_require__(27);
 
 var msPattern = /^ms-/;
 
@@ -18307,7 +18420,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18343,7 +18456,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18358,7 +18471,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(28);
+var camelize = __webpack_require__(29);
 
 var msPattern = /^-ms-/;
 
@@ -18386,7 +18499,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18421,7 +18534,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18441,7 +18554,7 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Input = __webpack_require__(30);
+var _Input = __webpack_require__(31);
 
 var _Input2 = _interopRequireDefault(_Input);
 
@@ -18506,7 +18619,7 @@ var TestContainer = function (_Component) {
 exports.default = TestContainer;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18520,7 +18633,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(31);
+var _propTypes = __webpack_require__(32);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -18564,7 +18677,7 @@ Input.propTypes = {
 exports.default = Input;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18589,17 +18702,17 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(32)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(33)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(33)();
+  module.exports = __webpack_require__(34)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19149,7 +19262,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19214,7 +19327,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19230,15 +19343,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _List = __webpack_require__(35);
+var _List = __webpack_require__(36);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Database = __webpack_require__(16);
+var _Database = __webpack_require__(17);
 
 var _Database2 = _interopRequireDefault(_Database);
 
-var _Welcome = __webpack_require__(37);
+var _Welcome = __webpack_require__(39);
 
 var _Welcome2 = _interopRequireDefault(_Welcome);
 
@@ -19263,11 +19376,25 @@ var Body = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this));
 
     _this.renderAsyncList = _this.renderAsyncList.bind(_this);
-    _this.state = { data: {} };
+    _this.state = {
+      data: {},
+      editingSwitch: false
+    };
     return _this;
   }
 
   _createClass(Body, [{
+    key: "deleteListItem",
+    value: function deleteListItem() {}
+  }, {
+    key: "updateListItem",
+    value: function updateListItem() {}
+  }, {
+    key: "enableEditing",
+    value: function enableEditing() {
+      this.setState({ editingSwitch: !this.state.editingSwitch });
+    }
+  }, {
     key: "componentWillMount",
     value: function componentWillMount() {
       var _this2 = this;
@@ -19278,16 +19405,16 @@ var Body = function (_React$Component) {
       });
     }
   }, {
-    key: "list",
-    value: function list(name) {
-      return _react2.default.createElement(_List2.default, { key: name, path: name, listData: this.state.data[name] });
+    key: "newList",
+    value: function newList(name) {
+      return _react2.default.createElement(_List2.default, { key: name, modifiable: this.state.editingSwitch, path: name, listData: this.state.data[name] });
     }
   }, {
     key: "renderAsyncList",
     value: function renderAsyncList() {
       var array = [];
       for (var listName in this.state.data) {
-        array.push(this.list(listName));
+        array.push(this.newList(listName));
       }
       return array;
     }
@@ -19309,7 +19436,7 @@ var Body = function (_React$Component) {
 exports.default = Body;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19325,9 +19452,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ListItem = __webpack_require__(36);
+var _ListItem = __webpack_require__(16);
 
 var _ListItem2 = _interopRequireDefault(_ListItem);
+
+var _ListItemNew = __webpack_require__(37);
+
+var _ListItemNew2 = _interopRequireDefault(_ListItemNew);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19343,18 +19474,35 @@ var List = function (_React$Component) {
   function List() {
     _classCallCheck(this, List);
 
-    return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this));
+
+    _this.size = 0;
+    return _this;
   }
 
   _createClass(List, [{
+    key: "newItemListItem",
+    value: function newItemListItem() {
+      return _react2.default.createElement(_ListItemNew2.default, {
+        currentSize: this.size,
+        key: "newOne",
+        name: "new",
+        "default": "false",
+        lastStatusUpdate: "2018-1-1",
+        lastStatus: "false",
+        path: "NA"
+      });
+    }
+  }, {
     key: "li",
-    value: function li(listItemSetup, key) {
+    value: function li(list, key, orderNumber) {
       return _react2.default.createElement(_ListItem2.default, {
         key: key,
-        name: listItemSetup.name,
-        "default": listItemSetup.default,
-        lastStatusUpdate: listItemSetup.since,
-        lastStatus: listItemSetup.status,
+        orderNumber: orderNumber,
+        name: list.name,
+        "default": list.default,
+        lastStatusUpdate: list.since,
+        lastStatus: list.status,
         path: this.props.path + "." + key
       });
     }
@@ -19364,13 +19512,14 @@ var List = function (_React$Component) {
       var regex = /^[$]/;
       var setupData = this.props.listData;
       var li_Array = [];
-
+      this.size = Object.keys(setupData).length;
+      var orderNumber = 1;
       for (var key in setupData) {
         if (key.match(regex)) continue;
         var setup = setupData[key];
-        li_Array.push(this.li(setup, key));
+        li_Array.push(this.li(setup, key, orderNumber));
+        orderNumber++;
       }
-
       return li_Array;
     }
   }, {
@@ -19389,9 +19538,8 @@ var List = function (_React$Component) {
         _react2.default.createElement(
           "ol",
           null,
-          " ",
           this.renderListItems(),
-          "    "
+          this.newItemListItem()
         )
       );
     }
@@ -19403,7 +19551,7 @@ var List = function (_React$Component) {
 exports.default = List;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19415,15 +19563,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _ListItem2 = __webpack_require__(16);
+
+var _ListItem3 = _interopRequireDefault(_ListItem2);
+
+var _ListBean = __webpack_require__(38);
+
+var _ListBean2 = _interopRequireDefault(_ListBean);
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Database = __webpack_require__(16);
-
-var _Database2 = _interopRequireDefault(_Database);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19431,79 +19585,157 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ListItem = function (_React$Component) {
-  _inherits(ListItem, _React$Component);
+var ListItemNew = function (_ListItem) {
+  _inherits(ListItemNew, _ListItem);
 
-  function ListItem(props) {
-    _classCallCheck(this, ListItem);
+  function ListItemNew(props) {
+    _classCallCheck(this, ListItemNew);
 
-    var _this = _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ListItemNew.__proto__ || Object.getPrototypeOf(ListItemNew)).call(this, props));
 
-    _this.state = {};
-    _this.Database = new _Database2.default();
-    _this.state.status = _this.getStatusFromDb();
+    _this.state.formVisibility = false;
+    _this.state.formDefault = false;
+    _this.showRest = _this.showRest.bind(_this);
+    _this.form = _this.form.bind(_this);
     return _this;
   }
 
-  _createClass(ListItem, [{
-    key: 'componentWillMount',
+  _createClass(ListItemNew, [{
+    key: "form",
+    value: function form(event) {
+      var target = event.target;
+      var name = target.name;
+      var value = target.type == 'checkbox' ? target.checked : target.value;
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "showRest",
+    value: function showRest(onChangeEvent) {
+      var inputText = onChangeEvent.target.value;
+      var shouldBeVisible = inputText != '';
+      this.setState({ formVisibility: shouldBeVisible });
+    }
+  }, {
+    key: "componentWillMount",
     value: function componentWillMount() {
-      this.setClass(this.state.status);
+      this.setClass(false);
     }
   }, {
-    key: 'getStatusFromDb',
-    value: function getStatusFromDb() {
-      var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
-      return isOK || this.props.default;
+    key: "sendUpdate",
+    value: function sendUpdate(event) {
+      event.preventDefault();
+      console.log(this.state);
+      console.log(event.target.value);
     }
   }, {
-    key: 'updateDB',
-    value: function updateDB(thePath, theValuealue) {
-      this.Database.update(this.Database.paths.lists, thePath, theValuealue);
+    key: "getObject",
+    value: function getObject() {}
+  }, {
+    key: "addToDB",
+    value: function addToDB() {
+
+      this.updateDB(this.props.path + '.' + uniqueID, listObject);
     }
   }, {
-    key: 'setClass',
-    value: function setClass(isChecked) {
-      var checked = isChecked ? ' isChecked' : '';
-      this.setState({ class: 'listItem' + checked });
-    }
-  }, {
-    key: 'checkboxClick',
-    value: function checkboxClick(e) {
-      var notStatus = !this.state.status;
-      this.setState({ status: notStatus });
-      this.updateDB(this.props.path + '.status', notStatus);
-      this.updateDB(this.props.path + '.since', this.Database.getDateString());
-      this.setClass(notStatus);
-    }
-  }, {
-    key: 'render',
+    key: "render",
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        'li',
+        "li",
         null,
         _react2.default.createElement(
-          'div',
+          "form",
           { className: this.state.class },
-          _react2.default.createElement('input', {
-            onChange: this.checkboxClick.bind(this),
-            type: 'checkbox',
-            checked: this.state.status,
-            value: this.state.status
+          _react2.default.createElement("input", {
+            type: "checkbox",
+            className: "hidden"
           }),
-          this.props.name
+          _react2.default.createElement("input", {
+            type: "text",
+
+            onChange: function onChange(event) {
+              _this2.showRest(event);
+              _this2.form(event);
+            },
+            name: "formText"
+          }),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement("input", {
+            type: "checkbox",
+            checked: this.state.formDefault,
+            className: this.state.formVisibility ? '' : 'displayNone',
+            name: "formDefault",
+            onChange: this.form
+          }),
+          _react2.default.createElement(
+            "p",
+            {
+              className: this.state.formVisibility ? '' : 'displayNone'
+            },
+            "Checked by Default"
+          ),
+          _react2.default.createElement("input", {
+            type: "submit",
+            className: this.state.formVisibility ? '' : 'displayNone',
+            onClick: this.sendUpdate.bind(this)
+          })
         )
       );
     }
   }]);
 
-  return ListItem;
-}(_react2.default.Component);
+  return ListItemNew;
+}(_ListItem3.default);
 
-exports.default = ListItem;
+exports.default = ListItemNew;
 
 /***/ }),
-/* 37 */
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ListBean = function () {
+	function ListBean() {
+		_classCallCheck(this, ListBean);
+
+		this.default = true;
+		this.name = "Name Undefined";
+		this.since = "2018-06-06";
+		this.status = false;
+		this.numberOnList = 0;
+		this.copy = this.copy.bind(this);
+	}
+
+	_createClass(ListBean, [{
+		key: "copy",
+		value: function copy() {
+			var lb = new ListBean();
+			lb.default = this.default;
+			lb.name = this.name;
+			lb.since = this.since;
+			lb.status = this.status;
+			lb.numberOnList = this.numberOnList;
+		}
+	}]);
+
+	return ListBean;
+}();
+
+exports.default = ListBean;
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

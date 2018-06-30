@@ -11,8 +11,23 @@ export default class Body extends React.Component {
   constructor() {
     super()
     this.renderAsyncList = this.renderAsyncList.bind(this)
-    this.state = {data: {}}
+    this.state = {
+			data: {},
+			editingSwitch: false
+		}
   }
+
+	deleteListItem() {
+
+	}
+
+	updateListItem() {
+
+	}
+
+	enableEditing() {
+		this.setState({editingSwitch: !this.state.editingSwitch})
+	}
 
   componentWillMount() {
     lists.then(doc => {
@@ -21,14 +36,14 @@ export default class Body extends React.Component {
     })
   }
 
-  list(name) {
-    return <List key={name} path={name} listData={this.state.data[name]} />
+  newList(name) {
+    return <List key={name} modifiable={this.state.editingSwitch} path={name} listData={this.state.data[name]} />
   }
 
   renderAsyncList() {
     let array = []
     for(let listName in this.state.data) {
-      array.push(this.list(listName))
+      array.push(this.newList(listName))
     }
     return array
   }
