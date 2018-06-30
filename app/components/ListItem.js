@@ -1,7 +1,6 @@
 import React from 'react'
 import Database from '../Database'
 
-
 export default class ListItem extends React.Component {
   constructor(props) {
     super(props)
@@ -32,9 +31,11 @@ export default class ListItem extends React.Component {
   checkboxClick(e) {
     const notStatus = !this.state.status
     this.setState({ status: notStatus })
-    this.updateDB(this.props.path + '.status', notStatus)
-    this.updateDB(this.props.path + '.since',  this.Database.getDateString())
-    this.updateDB(this.props.path + '.order', this.props.orderNumber)
+    let data = this.props.data
+    data.status = notStatus
+    data.since = this.Database.getDateString()
+    data.order = this.props.orderNumber
+    this.updateDB(this.props.path, data)
     this.setClass(notStatus)
   }
 

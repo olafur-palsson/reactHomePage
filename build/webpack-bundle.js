@@ -1068,9 +1068,11 @@ var ListItem = function (_React$Component) {
     value: function checkboxClick(e) {
       var notStatus = !this.state.status;
       this.setState({ status: notStatus });
-      this.updateDB(this.props.path + '.status', notStatus);
-      this.updateDB(this.props.path + '.since', this.Database.getDateString());
-      this.updateDB(this.props.path + '.order', this.props.orderNumber);
+      var data = this.props.data;
+      data.status = notStatus;
+      data.since = this.Database.getDateString();
+      data.order = this.props.orderNumber;
+      this.updateDB(this.props.path, data);
       this.setClass(notStatus);
     }
   }, {
@@ -1132,8 +1134,6 @@ var paths = {
   lists: "homepageSetup/listOfLists"
 };
 
-var prototype = {};
-
 var Database = function () {
   _createClass(Database, [{
     key: "getLists",
@@ -1175,6 +1175,7 @@ var Database = function () {
     }
 
     //objectPath is on form "blabla.key1.key2"
+    //heavy-lifting function
 
   }, {
     key: "update",
@@ -1182,7 +1183,7 @@ var Database = function () {
       //breyta í dynamic update
 
       var data = this.get(docPath);
-      var navigator = data; //setja navigatorinn efst í skjalið
+      var navigator = data; //s  etja navigatorinn efst í skjalið
       var path = objectPath.split(".");
       while (path.length > 1) {
         navigator = navigator[path.shift()];
@@ -19490,15 +19491,17 @@ var List = function (_React$Component) {
         "default": "false",
         lastStatusUpdate: "2018-1-1",
         lastStatus: "false",
-        path: "NA"
+        path: this.props.path
       });
     }
   }, {
     key: "li",
-    value: function li(list, key, orderNumber) {
+    value: function li(list, key) {
+      var order = list.order ? list.order : 4444;
       return _react2.default.createElement(_ListItem2.default, {
         key: key,
-        orderNumber: orderNumber,
+        data: list,
+        orderNumber: list.order,
         name: list.name,
         "default": list.default,
         lastStatusUpdate: list.since,
@@ -19506,6 +19509,20 @@ var List = function (_React$Component) {
         path: this.props.path + "." + key
       });
     }
+
+    //basically held eg ad eg verdi ad
+    //hafa order a hverjum einasta og sidan
+    //uppfaera alla
+
+    //eg er samt ad paela, thad verdur jafn morg request og
+    //fjoldi item-a a listanum svo thad verdur alls ekki efficient
+    //nema kannski madur myndi taka allan listann og vera med "fix order"
+
+    //listinn er eftir allt saman a "List.js" svo thad aetti ekki ad
+    //vera of mikid ves thegar madur er kominn inn i thetta.
+
+    //held ad thad se besta approachid
+
   }, {
     key: "renderListItems",
     value: function renderListItems() {
@@ -19513,13 +19530,18 @@ var List = function (_React$Component) {
       var setupData = this.props.listData;
       var li_Array = [];
       this.size = Object.keys(setupData).length;
-      var orderNumber = 1;
       for (var key in setupData) {
         if (key.match(regex)) continue;
         var setup = setupData[key];
-        li_Array.push(this.li(setup, key, orderNumber));
-        orderNumber++;
+        li_Array.push(this.li(setup, key));
       }
+      li_Array.sort(function (a, b) {
+        var numA = a.props.orderNumber;
+        var numB = b.props.orderNumber;
+        if (numA < numB) return -1;
+        if (numA > numB) return 1;
+        return 0;
+      });
       return li_Array;
     }
   }, {
@@ -19625,15 +19647,26 @@ var ListItemNew = function (_ListItem) {
     value: function sendUpdate(event) {
       event.preventDefault();
       console.log(this.state);
-      console.log(event.target.value);
+      var listObject = {};
+      listObject.name = this.state.formText;
+      listObject.default = this.state.formDefault;
+      listObject.order = this.getSerial();
+      listObject.status = false;
+      listObject.since = "2018-1-1";
+      this.addToDB(listObject);
     }
   }, {
-    key: "getObject",
-    value: function getObject() {}
+    key: "getSerial",
+    value: function getSerial() {
+      var now = new Date();
+      return now.getTime();
+    }
   }, {
     key: "addToDB",
-    value: function addToDB() {
-
+    value: function addToDB(listObject) {
+      var uniqueID = this.getSerial() + "";
+      console.log(listObject);
+      console.log(this.props.path);
       this.updateDB(this.props.path + '.' + uniqueID, listObject);
     }
   }, {

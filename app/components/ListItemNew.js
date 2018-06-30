@@ -34,15 +34,24 @@ export default class ListItemNew extends ListItem {
   sendUpdate(event) {
     event.preventDefault()
     console.log(this.state)
-    console.log(event.target.value)
+    let listObject = {}
+    listObject.name = this.state.formText
+    listObject.default = this.state.formDefault
+    listObject.order = this.getSerial()
+    listObject.status = false
+    listObject.since = "2018-1-1"
+    this.addToDB(listObject)
   }
 
-  getObject() {
-    
+  getSerial() {
+    const now = new Date()
+    return now.getTime()
   }
 
-	addToDB() {
-
+	addToDB(listObject) {
+    const uniqueID = this.getSerial() + ""
+    console.log(listObject)
+    console.log(this.props.path)
 		this.updateDB(this.props.path + '.' + uniqueID, listObject)
 	}
 

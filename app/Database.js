@@ -5,10 +5,6 @@ const paths = {
   lists: "homepageSetup/listOfLists"
 }
 
-const prototype = {
-
-}
-
 class Database {
   getLists() {
     const document = this.fstore.doc(paths.lists).get()
@@ -40,11 +36,12 @@ class Database {
   }
 
   //objectPath is on form "blabla.key1.key2"
+  //heavy-lifting function
   update(docPath, objectPath, keyValue) {
     //breyta í dynamic update
-		
+
     let data = this.get(docPath)
-    let navigator = data //setja navigatorinn efst í skjalið
+    let navigator = data //s  etja navigatorinn efst í skjalið
     let path = objectPath.split(".")
     while(path.length > 1)
         navigator = navigator[path.shift()]
@@ -79,6 +76,5 @@ class Database {
     this.getLists()
   }
 }
-
 
 export default Database
