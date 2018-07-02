@@ -56,7 +56,12 @@ export default class ListItem extends React.Component {
             />
             {this.props.name}
           </div>
-				  <button onClick={this.delete.bind(this)}> Del </button>
+				  <button
+            className={this.props.modifiable ? "" : "displayNone"}
+            onClick={this.delete.bind(this)}
+          >
+            Del
+          </button>
         </div>
       </li>
     )

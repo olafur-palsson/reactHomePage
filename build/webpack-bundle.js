@@ -1102,8 +1102,11 @@ var ListItem = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { onClick: this.delete.bind(this) },
-            ' Del '
+            {
+              className: this.props.modifiable ? "" : "displayNone",
+              onClick: this.delete.bind(this)
+            },
+            'Del'
           )
         )
       );
@@ -19426,7 +19429,11 @@ var Body = function (_React$Component) {
         "div",
         null,
         _react2.default.createElement(_Welcome2.default, { string: "Remember to write shitty code <3 -\xD3li :)" }),
-        this.renderAsyncList()
+        _react2.default.createElement(
+          "div",
+          { className: "listHolder" },
+          this.renderAsyncList()
+        )
       );
     }
   }]);
@@ -19444,7 +19451,7 @@ exports.default = Body;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+		value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19470,110 +19477,128 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var List = function (_React$Component) {
-  _inherits(List, _React$Component);
+		_inherits(List, _React$Component);
 
-  function List() {
-    _classCallCheck(this, List);
+		function List() {
+				_classCallCheck(this, List);
 
-    var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this));
+				var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this));
 
-    _this.size = 0;
-    return _this;
-  }
+				_this.size = 0;
+				_this.state = { modifiable: false };
+				return _this;
+		}
 
-  _createClass(List, [{
-    key: "newItemListItem",
-    value: function newItemListItem() {
-      return _react2.default.createElement(_ListItemNew2.default, {
-        currentSize: this.size,
-        key: "newOne",
-        name: "new",
-        "default": "false",
-        lastStatusUpdate: "2018-1-1",
-        lastStatus: "false",
-        path: this.props.path
-      });
-    }
-  }, {
-    key: "li",
-    value: function li(list, key) {
-      var order = list.order ? list.order : 4444;
-      return _react2.default.createElement(_ListItem2.default, {
-        key: key,
-        data: list,
-        orderNumber: list.order,
-        name: list.name,
-        "default": list.default,
-        lastStatusUpdate: list.since,
-        lastStatus: list.status,
-        path: this.props.path + "." + key
-      });
-    }
+		_createClass(List, [{
+				key: "newItemListItem",
+				value: function newItemListItem() {
+						return _react2.default.createElement(_ListItemNew2.default, {
+								currentSize: this.size,
+								key: "newOne",
+								name: "new",
+								"default": "false",
+								lastStatusUpdate: "2018-1-1",
+								lastStatus: "false",
+								path: this.props.path
+						});
+				}
+		}, {
+				key: "li",
+				value: function li(list, key) {
+						var order = list.order ? list.order : 4444;
+						return _react2.default.createElement(_ListItem2.default, {
+								modifiable: this.state.modifiable,
+								key: key,
+								data: list,
+								orderNumber: list.order,
+								name: list.name,
+								"default": list.default,
+								lastStatusUpdate: list.since,
+								lastStatus: list.status,
+								path: this.props.path + "." + key
+						});
+				}
 
-    //basically held eg ad eg verdi ad
-    //hafa order a hverjum einasta og sidan
-    //uppfaera alla
+				//basically held eg ad eg verdi ad
+				//hafa order a hverjum einasta og sidan
+				//uppfaera alla
 
-    //eg er samt ad paela, thad verdur jafn morg request og
-    //fjoldi item-a a listanum svo thad verdur alls ekki efficient
-    //nema kannski madur myndi taka allan listann og vera med "fix order"
+				//eg er samt ad paela, thad verdur jafn morg request og
+				//fjoldi item-a a listanum svo thad verdur alls ekki efficient
+				//nema kannski madur myndi taka allan listann og vera med "fix order"
 
-    //listinn er eftir allt saman a "List.js" svo thad aetti ekki ad
-    //vera of mikid ves thegar madur er kominn inn i thetta.
+				//listinn er eftir allt saman a "List.js" svo thad aetti ekki ad
+				//vera of mikid ves thegar madur er kominn inn i thetta.
 
-    //held ad thad se besta approachid
+				//held ad thad se besta approachid
 
-    //TODO:
-    //Drag and drop re-ordering
-    //Editing mode to view the delete button and to modify the 'default'
-    //option
-    //Later add a profile for each
+				//TODO:
+				//Drag and drop re-ordering
+				//Editing mode to view the delete button and to modify the 'default'
+				//option
+				//Later add a profile for each
 
-  }, {
-    key: "renderListItems",
-    value: function renderListItems() {
-      var regex = /^[$]/;
-      var setupData = this.props.listData;
-      var li_Array = [];
-      this.size = Object.keys(setupData).length;
-      for (var key in setupData) {
-        if (key.match(regex)) continue;
-        var setup = setupData[key];
-        li_Array.push(this.li(setup, key));
-      }
-      li_Array.sort(function (a, b) {
-        var numA = a.props.orderNumber;
-        var numB = b.props.orderNumber;
-        if (numA < numB) return -1;
-        if (numA > numB) return 1;
-        return 0;
-      });
-      return li_Array;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return _react2.default.createElement(
-        "div",
-        { className: "todoList" },
-        _react2.default.createElement(
-          "h1",
-          null,
-          " ",
-          this.props.listData.$name,
-          " "
-        ),
-        _react2.default.createElement(
-          "ol",
-          null,
-          this.renderListItems(),
-          this.newItemListItem()
-        )
-      );
-    }
-  }]);
+		}, {
+				key: "modifyBoxClick",
+				value: function modifyBoxClick(e) {
+						this.setState({ modifiable: !this.state.modifiable });
+				}
+		}, {
+				key: "renderListItems",
+				value: function renderListItems() {
+						var regex = /^[$]/;
+						var setupData = this.props.listData;
+						var li_Array = [];
+						this.size = Object.keys(setupData).length;
+						for (var key in setupData) {
+								if (key.match(regex)) continue;
+								var setup = setupData[key];
+								li_Array.push(this.li(setup, key));
+						}
+						li_Array.sort(function (a, b) {
+								var numA = a.props.orderNumber;
+								var numB = b.props.orderNumber;
+								if (numA < numB) return -1;
+								if (numA > numB) return 1;
+								return 0;
+						});
+						return li_Array;
+				}
+		}, {
+				key: "render",
+				value: function render() {
+						return _react2.default.createElement(
+								"div",
+								{ className: "todoList" },
+								_react2.default.createElement(
+										"div",
+										{ className: "listHeader" },
+										_react2.default.createElement(
+												"h1",
+												null,
+												" ",
+												this.props.listData.$name,
+												" "
+										),
+										"Modify",
+										_react2.default.createElement("input", {
+												type: "checkbox",
+												onChange: this.modifyBoxClick.bind(this),
+												checked: this.state.modifiable,
+												value: this.state.modifiable
+										})
+								),
+								_react2.default.createElement(
+										"ol",
+										null,
+										this.renderListItems(),
+										this.newItemListItem()
+								)
+						);
+				}
+		}]);
 
-  return List;
+		return List;
 }(_react2.default.Component);
 
 exports.default = List;

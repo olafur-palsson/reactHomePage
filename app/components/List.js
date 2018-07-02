@@ -6,6 +6,7 @@ export default class List extends React.Component {
 	constructor() {
 		super()
 		this.size = 0
+		this.state = { modifiable: false }
 	}
 
   newItemListItem() {
@@ -23,6 +24,7 @@ export default class List extends React.Component {
   li(list, key) {
 		const order = list.order ? list.order : 4444
     return (<ListItem
+			modifiable       = {this.state.modifiable}
       key              = {key}
 			data 				   	 = {list}
 			orderNumber      = {list.order}
@@ -53,6 +55,10 @@ export default class List extends React.Component {
 	//option
 	//Later add a profile for each
 
+	modifyBoxClick(e) {
+		this.setState({ modifiable: !this.state.modifiable })
+	}
+
   renderListItems() {
     const regex = /^[$]/
     const setupData = this.props.listData
@@ -76,7 +82,16 @@ export default class List extends React.Component {
   render() {
     return(
       <div className="todoList">
-          <h1> {this.props.listData.$name} </h1>
+          <div className="listHeader">
+						<h1> {this.props.listData.$name} </h1>
+						Modify
+						<input
+							type="checkbox"
+							onChange={this.modifyBoxClick.bind(this)}
+							checked={this.state.modifiable}
+							value={this.state.modifiable}
+						/>
+					</div>
           <ol>
             {this.renderListItems()}
             {this.newItemListItem()}
