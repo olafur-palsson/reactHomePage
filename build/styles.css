@@ -48,6 +48,15 @@ h5 {
   justify-content: space-between;
 }
 
+.listItemNewForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.listItemNew {
+  display: flex;
+}
+
 .isChecked {
   background-color:  #2b9905;
 }

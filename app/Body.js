@@ -1,5 +1,5 @@
 import React from "react"
-import List from "./components/List"
+import List from "./components/Daily/List"
 import Database from "./Database"
 import Welcome from "./components/Welcome"
 

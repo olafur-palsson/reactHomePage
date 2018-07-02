@@ -27,10 +27,6 @@ export default class ListItemNew extends ListItem {
     this.setState({ formVisibility: shouldBeVisible })
   }
 
-  componentWillMount() {
-    this.setClass(false)
-  }
-
   sendUpdate(event) {
     event.preventDefault()
     console.log(this.state)
@@ -48,6 +44,10 @@ export default class ListItemNew extends ListItem {
     return now.getTime()
   }
 
+  componentWillMount() {
+    this.setClass(false)
+  }
+
 	addToDB(listObject) {
     const uniqueID = this.getSerial() + ""
     console.log(listObject)
@@ -59,39 +59,29 @@ export default class ListItemNew extends ListItem {
     return(
       <li>
         <form className={this.state.class}>
-
-          <input
-            type='checkbox'
-            className='hidden'
-          />
-
-          <input
-            type='text'
-
-            onChange={(event) => {
+          <div className="listItemNewForm">
+            <input
+              type='text'
+              onChange={(event) => {
               this.showRest(event)
-              this.form(event)
-            }}
-            name='formText'
-          />
-          <br/>
-          <input
-            type='checkbox'
-            checked={this.state.formDefault}
-            className={this.state.formVisibility ? '' : 'displayNone' }
-            name='formDefault'
-            onChange={this.form}
-          />
-          <p
-            className={this.state.formVisibility ? '' : 'displayNone' }
-          >Checked by Default</p>
-
-          <input
-            type='submit'
-            className={this.state.formVisibility ? '' : 'displayNone' }
-            onClick={this.sendUpdate.bind(this)}
-          />
-
+                this.form(event)
+              }}
+              name='formText'
+            />
+            <div className={this.state.formVisibility ? 'listItemNew' : 'displayNone' }>
+              <input
+                type='checkbox'
+                checked={this.state.formDefault}
+                name='formDefault'
+                onChange={this.form}
+              />
+              <p>Checked by Default</p>
+              <input
+                type='submit'
+                onClick={this.sendUpdate.bind(this)}
+              />
+            </div>
+          </div>
         </form>
       </li>
     )
