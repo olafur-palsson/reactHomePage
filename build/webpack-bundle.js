@@ -19523,6 +19523,12 @@ var List = function (_React$Component) {
 
     //held ad thad se besta approachid
 
+    //TODO:
+    //Drag and drop re-ordering
+    //Editing mode to view the delete button and to modify the 'default'
+    //option
+    //Later add a profile for each
+
   }, {
     key: "renderListItems",
     value: function renderListItems() {

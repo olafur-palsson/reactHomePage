@@ -23,16 +23,16 @@ export default class List extends React.Component {
   li(list, key) {
 		const order = list.order ? list.order : 4444
     return (<ListItem
-        key              = {key}
-				data 						= {list}
-				orderNumber     = {list.order}
-        name             = {list.name}
-        default          = {list.default}
-        lastStatusUpdate = {list.since}
-        lastStatus       = {list.status}
-        path             = {this.props.path + "." + key}
-      />)
-    }
+      key              = {key}
+			data 				   	 = {list}
+			orderNumber      = {list.order}
+      name             = {list.name}
+      default          = {list.default}
+      lastStatusUpdate = {list.since}
+      lastStatus       = {list.status}
+      path             = {this.props.path + "." + key}
+    />)
+  }
 
 	//basically held eg ad eg verdi ad
 	//hafa order a hverjum einasta og sidan
@@ -46,6 +46,13 @@ export default class List extends React.Component {
 	//vera of mikid ves thegar madur er kominn inn i thetta.
 
 	//held ad thad se besta approachid
+
+	//TODO:
+	//Drag and drop re-ordering
+	//Editing mode to view the delete button and to modify the 'default'
+	//option
+	//Later add a profile for each
+
   renderListItems() {
     const regex = /^[$]/
     const setupData = this.props.listData
@@ -64,9 +71,7 @@ export default class List extends React.Component {
 			return 0
 		})
     return li_Array
-
   }
-
 
   render() {
     return(
@@ -76,7 +81,6 @@ export default class List extends React.Component {
             {this.renderListItems()}
             {this.newItemListItem()}
           </ol>
-
       </div>
     )
   }
