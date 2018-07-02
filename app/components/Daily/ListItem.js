@@ -1,16 +1,17 @@
 import React from 'react'
+import DBCComponent from '../DatabaseConnectedComponent'
 import Database from '../../Database'
 
-export default class ListItem extends React.Component {
+export default class ListItem extends DBCComponent {
   constructor(props) {
     super(props)
     this.state              = {}
-    this.Database           = new Database()
     this.state.status       = (this.getStatusFromDb())
   }
 
   componentWillMount() {
     this.setClass(this.state.status)
+    this.updateDB(this.props.path, this.props.data)
   }
 
   getStatusFromDb() {
@@ -19,13 +20,13 @@ export default class ListItem extends React.Component {
     return isOK || this.props.default
   }
 
-  updateDB(thePath, theValue) {
-    this.Database.update(this.Database.paths.lists, thePath, theValue)
-  }
-
   setClass(isChecked) {
     const checked = isChecked ? ' isChecked':''
     this.setState({class: 'listItem' + checked})
+  }
+
+  displayIfTrueClass(isThisTrue) {
+    return isThisTrue ? "" : "displayNone"
   }
 
   checkboxClick(e) {
@@ -37,6 +38,13 @@ export default class ListItem extends React.Component {
     data.order = this.props.orderNumber
     this.updateDB(this.props.path, data)
     this.setClass(notStatus)
+  }
+
+  nameChange(e) {
+    const newName = e.target.value
+    let data = this.props.data
+    data.name = newName
+    this.updateDB(this.props.path, data)
   }
 
 	delete() {
@@ -54,10 +62,18 @@ export default class ListItem extends React.Component {
               checked={this.state.status}
               value={this.state.status}
             />
-            {this.props.name}
+            <div className={this.displayIfTrueClass(!this.props.modifiable)}>
+              {this.props.data.name}
+            </div>
+            <input
+              className={this.displayIfTrueClass(this.props.modifiable)}
+              type="text"
+              defaultValue={this.props.data.name}
+              onChange={this.nameChange.bind(this)}
+            />
           </div>
 				  <button
-            className={this.props.modifiable ? "" : "displayNone"}
+            className={this.displayIfTrueClass(this.props.modifiable)}
             onClick={this.delete.bind(this)}
           >
             Del

@@ -1,17 +1,21 @@
 import React from "react";
+import DBCComponent from '../DatabaseConnectedComponent'
 import ListItem from "./ListItem"
 import ListItemNew from "./ListItemNew"
 
-export default class List extends React.Component {
-	constructor() {
-		super()
-		this.size = 0
-		this.state = { modifiable: false }
+export default class List extends DBCComponent {
+	constructor(props) {
+		super(props)
+		this.state = {
+			modifiable: false,
+		  size: 0
+		}
 	}
 
   newItemListItem() {
     return(<ListItemNew
-			currentSize={this.size}
+			update={this.props.update}
+			currentSize={this.state.size}
       key='newOne'
       name='new'
       default='false'
@@ -21,9 +25,14 @@ export default class List extends React.Component {
     />)
   }
 
+	delete() {
+		this.updateDB(this.props.path, "DEL")
+	}
+
   li(list, key) {
 		const order = list.order ? list.order : 4444
     return (<ListItem
+			update           = {this.props.update}
 			modifiable       = {this.state.modifiable}
       key              = {key}
 			data 				   	 = {list}
@@ -59,24 +68,31 @@ export default class List extends React.Component {
 		this.setState({ modifiable: !this.state.modifiable })
 	}
 
-  renderListItems() {
+	fixOrderNumbers(setupData) {
     const regex = /^[$]/
-    const setupData = this.props.listData
-    let li_Array = []
-		this.size = Object.keys(setupData).length
-    for(let key in setupData) {
-      if(key.match(regex)) continue
-      const setup = setupData[key]
-      li_Array.push(this.li(setup, key))
-    }
-		li_Array.sort((a, b) => {
-			const numA = a.props.orderNumber
-			const numB = b.props.orderNumber
-			if(numA < numB) return -1
-			if(numA > numB) return 1
+		let array = []
+		for(let key in setupData) {
+			if(key.match(regex)) continue
+			let data = setupData[key]
+			data["key"] = key
+			array.push(setupData[key])
+		}
+		array.sort((a, b) => {
+			if(a.order > b.order) return 1
+			if(a.order < b.order) return -1
 			return 0
 		})
-    return li_Array
+		let i = 1
+		array = array.map(el => { el.order = i++; return el })
+		return array
+	}
+
+  renderListItems() {
+    const setupData = this.props.listData
+		this.size = Object.keys(setupData).length
+		const dataArray = this.fixOrderNumbers(setupData)
+    return dataArray.map(data => this.li(data, data["key"])
+		)
   }
 
   render() {
@@ -91,6 +107,11 @@ export default class List extends React.Component {
 							checked={this.state.modifiable}
 							value={this.state.modifiable}
 						/>
+						<button
+							onClick={this.delete.bind(this)}
+							className={this.state.modifiable ? '' : 'displayNone'}
+						>DELETE</button>
+
 					</div>
           <ol>
             {this.renderListItems()}

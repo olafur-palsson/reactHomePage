@@ -1,5 +1,4 @@
 import ListItem from "./ListItem"
-import ListBean from "../ListBean"
 import React from 'react'
 
 export default class ListItemNew extends ListItem {
@@ -63,7 +62,7 @@ export default class ListItemNew extends ListItem {
             <input
               type='text'
               onChange={(event) => {
-              this.showRest(event)
+                this.showRest(event)
                 this.form(event)
               }}
               name='formText'

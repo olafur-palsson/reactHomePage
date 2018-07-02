@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "./build";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
+  module.exports = __webpack_require__(20);
 } else {
-  module.exports = __webpack_require__(19);
+  module.exports = __webpack_require__(21);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -565,52 +565,6 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (process.env.NODE_ENV !== 'production') {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(17);
-} else {
-  module.exports = __webpack_require__(23);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -623,7 +577,7 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(20);
+  var ReactPropTypesSecret = __webpack_require__(22);
   var loggedTypeFailures = {};
 }
 
@@ -674,7 +628,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -713,7 +667,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -794,7 +748,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -836,7 +790,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -907,7 +861,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -922,7 +876,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(21);
+var isTextNode = __webpack_require__(23);
 
 /*eslint-disable no-bitwise */
 
@@ -950,7 +904,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -980,7 +934,261 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _DatabaseConnectedComponent = __webpack_require__(41);
+
+var _DatabaseConnectedComponent2 = _interopRequireDefault(_DatabaseConnectedComponent);
+
+var _Database = __webpack_require__(15);
+
+var _Database2 = _interopRequireDefault(_Database);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ListItem = function (_DBCComponent) {
+  _inherits(ListItem, _DBCComponent);
+
+  function ListItem(props) {
+    _classCallCheck(this, ListItem);
+
+    var _this = _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+
+    _this.state = {};
+    _this.state.status = _this.getStatusFromDb();
+    return _this;
+  }
+
+  _createClass(ListItem, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setClass(this.state.status);
+      this.updateDB(this.props.path, this.props.data);
+    }
+  }, {
+    key: 'getStatusFromDb',
+    value: function getStatusFromDb() {
+      var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
+      return isOK || this.props.default;
+    }
+  }, {
+    key: 'setClass',
+    value: function setClass(isChecked) {
+      var checked = isChecked ? ' isChecked' : '';
+      this.setState({ class: 'listItem' + checked });
+    }
+  }, {
+    key: 'displayIfTrueClass',
+    value: function displayIfTrueClass(isThisTrue) {
+      return isThisTrue ? "" : "displayNone";
+    }
+  }, {
+    key: 'checkboxClick',
+    value: function checkboxClick(e) {
+      var notStatus = !this.state.status;
+      this.setState({ status: notStatus });
+      var data = this.props.data;
+      data.status = notStatus;
+      data.since = this.Database.getDateString();
+      data.order = this.props.orderNumber;
+      this.updateDB(this.props.path, data);
+      this.setClass(notStatus);
+    }
+  }, {
+    key: 'nameChange',
+    value: function nameChange(e) {
+      var newName = e.target.value;
+      var data = this.props.data;
+      data.name = newName;
+      this.updateDB(this.props.path, data);
+    }
+  }, {
+    key: 'delete',
+    value: function _delete() {
+      this.updateDB(this.props.path, "DEL");
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: this.state.class },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', {
+              onChange: this.checkboxClick.bind(this),
+              type: 'checkbox',
+              checked: this.state.status,
+              value: this.state.status
+            }),
+            _react2.default.createElement(
+              'div',
+              { className: this.displayIfTrueClass(!this.props.modifiable) },
+              this.props.data.name
+            ),
+            _react2.default.createElement('input', {
+              className: this.displayIfTrueClass(this.props.modifiable),
+              type: 'text',
+              defaultValue: this.props.data.name,
+              onChange: this.nameChange.bind(this)
+            })
+          ),
+          _react2.default.createElement(
+            'button',
+            {
+              className: this.displayIfTrueClass(this.props.modifiable),
+              onClick: this.delete.bind(this)
+            },
+            'Del'
+          )
+        )
+      );
+    }
+  }]);
+
+  return ListItem;
+}(_DatabaseConnectedComponent2.default);
+
+exports.default = ListItem;
+
+/***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var paths = {
+  lists: "homepageSetup/listOfLists"
+};
+
+var Database = function () {
+  _createClass(Database, [{
+    key: "getLists",
+    value: function getLists() {
+      var document = this.fstore.doc(paths.lists).get();
+      this.storeDocumentInCache(paths.lists, document);
+      return document;
+    }
+  }, {
+    key: "set",
+    value: function set(key, data) {
+      window.localStorage.setItem(key, JSON.stringify(data));
+    }
+  }, {
+    key: "get",
+    value: function get(key) {
+      return JSON.parse(window.localStorage.getItem(key));
+    }
+  }, {
+    key: "storeDocumentInCache",
+    value: function storeDocumentInCache(key, docPromise) {
+      var _this = this;
+
+      docPromise.then(function (doc) {
+        return _this.set(key, doc.data());
+      });
+    }
+  }, {
+    key: "getDateString",
+    value: function getDateString() {
+      var date = new Date();
+      var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      return str;
+    }
+  }, {
+    key: "isToday",
+    value: function isToday(dateString) {
+      return dateString == this.getDateString();
+    }
+
+    //objectPath is on form "blabla.key1.key2"
+    //heavy-lifting function
+
+  }, {
+    key: "update",
+    value: function update(docPath, objectPath, keyValue) {
+      //breyta í dynamic update
+
+      var data = this.get(docPath);
+      var navigator = data; //s  etja navigatorinn efst í skjalið
+      var path = objectPath.split(".");
+      while (path.length > 1) {
+        navigator = navigator[path.shift()];
+      }var leafKey = path.shift();
+      if (keyValue == "DEL") {
+        delete navigator[leafKey];
+        console.log("Deleting was successful");
+      } else {
+        navigator[leafKey] = keyValue;
+      }
+      this.set(docPath, data);
+      this.fstore.doc(docPath).set(data);
+      return "Logging was successful";
+    }
+  }, {
+    key: "load",
+    value: function load() {
+      var downloadLists = {};
+      this.getLists();
+      for (var key in paths) {
+        this.documents[key] = this.fstore.doc(paths[key]).get();
+      }
+    }
+  }]);
+
+  function Database() {
+    _classCallCheck(this, Database);
+
+    this.paths = paths;
+    this.documents = {};
+    this.fstore = firebase.firestore();
+    this.getLists = this.getLists.bind(this);
+    this.update = this.update.bind(this);
+    this.isToday = this.isToday.bind(this);
+    this.getDateString = this.getDateString.bind(this);
+    this.getLists();
+  }
+
+  return Database;
+}();
+
+exports.default = Database;
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -988,9 +1196,9 @@ module.exports = focusNode;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(16);
+__webpack_require__(17);
 
-var _reactDom = __webpack_require__(7);
+var _reactDom = __webpack_require__(18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -998,7 +1206,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Body = __webpack_require__(29);
+var _Body = __webpack_require__(30);
 
 var _Body2 = _interopRequireDefault(_Body);
 
@@ -1034,13 +1242,59 @@ var app = _react2.default.createElement(Application, null);
 _reactDom2.default.render(app, location);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 17 */
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(19);
+} else {
+  module.exports = __webpack_require__(25);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1056,7 +1310,7 @@ _reactDom2.default.render(app, location);
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),l=__webpack_require__(9),B=__webpack_require__(3),C=__webpack_require__(2),ba=__webpack_require__(10),da=__webpack_require__(11),ea=__webpack_require__(12),fa=__webpack_require__(13),ia=__webpack_require__(14),D=__webpack_require__(4);
+var aa=__webpack_require__(1),l=__webpack_require__(8),B=__webpack_require__(3),C=__webpack_require__(2),ba=__webpack_require__(9),da=__webpack_require__(10),ea=__webpack_require__(11),fa=__webpack_require__(12),ia=__webpack_require__(13),D=__webpack_require__(4);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -1276,7 +1530,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1304,7 +1558,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1330,7 +1584,7 @@ var emptyObject = __webpack_require__(4);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(7);
 
 // TODO: this is special because it gets imported during build.
 
@@ -2669,7 +2923,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2688,7 +2942,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2703,7 +2957,7 @@ module.exports = ReactPropTypesSecret;
  * @typechecks
  */
 
-var isNode = __webpack_require__(22);
+var isNode = __webpack_require__(24);
 
 /**
  * @param {*} object The object to check.
@@ -2716,7 +2970,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2744,7 +2998,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2768,18 +3022,18 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(1);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(9);
+var ExecutionEnvironment = __webpack_require__(8);
 var _assign = __webpack_require__(3);
 var emptyFunction = __webpack_require__(2);
-var EventListener = __webpack_require__(10);
-var getActiveElement = __webpack_require__(11);
-var shallowEqual = __webpack_require__(12);
-var containsNode = __webpack_require__(13);
-var focusNode = __webpack_require__(14);
+var EventListener = __webpack_require__(9);
+var getActiveElement = __webpack_require__(10);
+var shallowEqual = __webpack_require__(11);
+var containsNode = __webpack_require__(12);
+var focusNode = __webpack_require__(13);
 var emptyObject = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(8);
-var hyphenateStyleName = __webpack_require__(24);
-var camelizeStyleName = __webpack_require__(26);
+var checkPropTypes = __webpack_require__(7);
+var hyphenateStyleName = __webpack_require__(26);
+var camelizeStyleName = __webpack_require__(28);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18146,7 +18400,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18161,7 +18415,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(25);
+var hyphenate = __webpack_require__(27);
 
 var msPattern = /^ms-/;
 
@@ -18188,7 +18442,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18224,7 +18478,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18239,7 +18493,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(27);
+var camelize = __webpack_require__(29);
 
 var msPattern = /^-ms-/;
 
@@ -18267,7 +18521,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18302,8 +18556,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 28 */,
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18319,15 +18572,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _List = __webpack_require__(39);
+var _List = __webpack_require__(31);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Database = __webpack_require__(30);
+var _Database = __webpack_require__(15);
 
 var _Database2 = _interopRequireDefault(_Database);
 
-var _Welcome = __webpack_require__(31);
+var _Welcome = __webpack_require__(34);
 
 var _Welcome2 = _interopRequireDefault(_Welcome);
 
@@ -18341,49 +18594,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var $db = new _Database2.default();
 var lists = $db.getLists();
-console.log(lists);
 
 var Body = function (_React$Component) {
   _inherits(Body, _React$Component);
 
-  function Body() {
+  function Body(props) {
     _classCallCheck(this, Body);
 
-    var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this));
+    var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this, props));
 
     _this.renderAsyncList = _this.renderAsyncList.bind(_this);
     _this.state = {
       data: {},
-      editingSwitch: false
+      newListMode: false
     };
     return _this;
   }
 
   _createClass(Body, [{
-    key: "deleteListItem",
-    value: function deleteListItem() {}
-  }, {
-    key: "updateListItem",
-    value: function updateListItem() {}
-  }, {
-    key: "enableEditing",
-    value: function enableEditing() {
-      this.setState({ editingSwitch: !this.state.editingSwitch });
-    }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "loadDataFromDatabase",
+    value: function loadDataFromDatabase() {
       var _this2 = this;
 
+      var lists = $db.getLists();
       lists.then(function (doc) {
         var data = doc.data();
         _this2.setState({ data: data });
       });
     }
   }, {
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.loadDataFromDatabase();
+    }
+  }, {
     key: "newList",
     value: function newList(name) {
-      return _react2.default.createElement(_List2.default, { key: name, modifiable: this.state.editingSwitch, path: name, listData: this.state.data[name] });
+      return _react2.default.createElement(_List2.default, {
+        key: name,
+        modifiable: this.state.editingSwitch,
+        path: name,
+        listData: this.state.data[name],
+        update: this.loadDataFromDatabase.bind(this)
+      });
     }
   }, {
     key: "renderAsyncList",
@@ -18395,12 +18648,40 @@ var Body = function (_React$Component) {
       return array;
     }
   }, {
+    key: "newListMode",
+    value: function newListMode() {
+      this.setState({ newListMode: true });
+    }
+  }, {
+    key: "addNewList",
+    value: function addNewList(e) {
+      e.preventDefault();
+      var nameOfList = e.target.newListName.value;
+      var listkey = nameOfList.toLowerCase();
+      listkey = listkey.split(' ').join('');
+      var listObject = { $name: nameOfList };
+      $db.update($db.paths.lists, listkey, listObject);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(_Welcome2.default, { string: "Remember to write shitty code <3 -\xD3li :)" }),
+        _react2.default.createElement(
+          "button",
+          {
+            className: this.state.newListMode ? 'displayNone' : '',
+            onClick: this.newListMode.bind(this)
+          },
+          "Add list"
+        ),
+        _react2.default.createElement(
+          "form",
+          { className: this.state.newListMode ? "" : "displayNone", onSubmit: this.addNewList.bind(this) },
+          _react2.default.createElement("input", { name: "newListName", type: "text" })
+        ),
         _react2.default.createElement(
           "div",
           { className: "listHolder" },
@@ -18416,7 +18697,201 @@ var Body = function (_React$Component) {
 exports.default = Body;
 
 /***/ }),
-/* 30 */
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _DatabaseConnectedComponent = __webpack_require__(41);
+
+var _DatabaseConnectedComponent2 = _interopRequireDefault(_DatabaseConnectedComponent);
+
+var _ListItem = __webpack_require__(14);
+
+var _ListItem2 = _interopRequireDefault(_ListItem);
+
+var _ListItemNew = __webpack_require__(32);
+
+var _ListItemNew2 = _interopRequireDefault(_ListItemNew);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var List = function (_DBCComponent) {
+	_inherits(List, _DBCComponent);
+
+	function List(props) {
+		_classCallCheck(this, List);
+
+		var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+
+		_this.state = {
+			modifiable: false,
+			size: 0
+		};
+		return _this;
+	}
+
+	_createClass(List, [{
+		key: "newItemListItem",
+		value: function newItemListItem() {
+			return _react2.default.createElement(_ListItemNew2.default, {
+				update: this.props.update,
+				currentSize: this.state.size,
+				key: "newOne",
+				name: "new",
+				"default": "false",
+				lastStatusUpdate: "2018-1-1",
+				lastStatus: "false",
+				path: this.props.path
+			});
+		}
+	}, {
+		key: "delete",
+		value: function _delete() {
+			this.updateDB(this.props.path, "DEL");
+		}
+	}, {
+		key: "li",
+		value: function li(list, key) {
+			var order = list.order ? list.order : 4444;
+			return _react2.default.createElement(_ListItem2.default, {
+				update: this.props.update,
+				modifiable: this.state.modifiable,
+				key: key,
+				data: list,
+				orderNumber: list.order,
+				name: list.name,
+				"default": list.default,
+				lastStatusUpdate: list.since,
+				lastStatus: list.status,
+				path: this.props.path + "." + key
+			});
+		}
+
+		//basically held eg ad eg verdi ad
+		//hafa order a hverjum einasta og sidan
+		//uppfaera alla
+
+		//eg er samt ad paela, thad verdur jafn morg request og
+		//fjoldi item-a a listanum svo thad verdur alls ekki efficient
+		//nema kannski madur myndi taka allan listann og vera med "fix order"
+
+		//listinn er eftir allt saman a "List.js" svo thad aetti ekki ad
+		//vera of mikid ves thegar madur er kominn inn i thetta.
+
+		//held ad thad se besta approachid
+
+		//TODO:
+		//Drag and drop re-ordering
+		//Editing mode to view the delete button and to modify the 'default'
+		//option
+		//Later add a profile for each
+
+	}, {
+		key: "modifyBoxClick",
+		value: function modifyBoxClick(e) {
+			this.setState({ modifiable: !this.state.modifiable });
+		}
+	}, {
+		key: "fixOrderNumbers",
+		value: function fixOrderNumbers(setupData) {
+			var regex = /^[$]/;
+			var array = [];
+			for (var key in setupData) {
+				if (key.match(regex)) continue;
+				var data = setupData[key];
+				data["key"] = key;
+				array.push(setupData[key]);
+			}
+			array.sort(function (a, b) {
+				if (a.order > b.order) return 1;
+				if (a.order < b.order) return -1;
+				return 0;
+			});
+			var i = 1;
+			array = array.map(function (el) {
+				el.order = i++;return el;
+			});
+			return array;
+		}
+	}, {
+		key: "renderListItems",
+		value: function renderListItems() {
+			var _this2 = this;
+
+			var setupData = this.props.listData;
+			this.size = Object.keys(setupData).length;
+			var dataArray = this.fixOrderNumbers(setupData);
+			return dataArray.map(function (data) {
+				return _this2.li(data, data["key"]);
+			});
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "todoList" },
+				_react2.default.createElement(
+					"div",
+					{ className: "listHeader" },
+					_react2.default.createElement(
+						"h1",
+						null,
+						" ",
+						this.props.listData.$name,
+						" "
+					),
+					"Modify",
+					_react2.default.createElement("input", {
+						type: "checkbox",
+						onChange: this.modifyBoxClick.bind(this),
+						checked: this.state.modifiable,
+						value: this.state.modifiable
+					}),
+					_react2.default.createElement(
+						"button",
+						{
+							onClick: this.delete.bind(this),
+							className: this.state.modifiable ? '' : 'displayNone'
+						},
+						"DELETE"
+					)
+				),
+				_react2.default.createElement(
+					"ol",
+					null,
+					this.renderListItems(),
+					this.newItemListItem()
+				)
+			);
+		}
+	}]);
+
+	return List;
+}(_DatabaseConnectedComponent2.default);
+
+exports.default = List;
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18428,107 +18903,141 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _ListItem2 = __webpack_require__(14);
+
+var _ListItem3 = _interopRequireDefault(_ListItem2);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var paths = {
-  lists: "homepageSetup/listOfLists"
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-var Database = function () {
-  _createClass(Database, [{
-    key: "getLists",
-    value: function getLists() {
-      var document = this.fstore.doc(paths.lists).get();
-      this.storeDocumentInCache(paths.lists, document);
-      return document;
-    }
-  }, {
-    key: "set",
-    value: function set(key, data) {
-      window.localStorage.setItem(key, JSON.stringify(data));
-    }
-  }, {
-    key: "get",
-    value: function get(key) {
-      return JSON.parse(window.localStorage.getItem(key));
-    }
-  }, {
-    key: "storeDocumentInCache",
-    value: function storeDocumentInCache(key, docPromise) {
-      var _this = this;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-      docPromise.then(function (doc) {
-        return _this.set(key, doc.data());
-      });
-    }
-  }, {
-    key: "getDateString",
-    value: function getDateString() {
-      var date = new Date();
-      var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-      return str;
-    }
-  }, {
-    key: "isToday",
-    value: function isToday(dateString) {
-      return dateString == this.getDateString();
-    }
+var ListItemNew = function (_ListItem) {
+  _inherits(ListItemNew, _ListItem);
 
-    //objectPath is on form "blabla.key1.key2"
-    //heavy-lifting function
+  function ListItemNew(props) {
+    _classCallCheck(this, ListItemNew);
 
-  }, {
-    key: "update",
-    value: function update(docPath, objectPath, keyValue) {
-      //breyta í dynamic update
+    var _this = _possibleConstructorReturn(this, (ListItemNew.__proto__ || Object.getPrototypeOf(ListItemNew)).call(this, props));
 
-      var data = this.get(docPath);
-      var navigator = data; //s  etja navigatorinn efst í skjalið
-      var path = objectPath.split(".");
-      while (path.length > 1) {
-        navigator = navigator[path.shift()];
-      }var leafKey = path.shift();
-      if (keyValue == "DEL") {
-        delete navigator[leafKey];
-        console.log("Deleting was successful");
-      } else {
-        navigator[leafKey] = keyValue;
-      }
-      this.set(docPath, data);
-      this.fstore.doc(docPath).set(data);
-      return "Logging was successful";
+    _this.state.formVisibility = false;
+    _this.state.formDefault = false;
+    _this.showRest = _this.showRest.bind(_this);
+    _this.form = _this.form.bind(_this);
+    return _this;
+  }
+
+  _createClass(ListItemNew, [{
+    key: 'form',
+    value: function form(event) {
+      var target = event.target;
+      var name = target.name;
+      var value = target.type == 'checkbox' ? target.checked : target.value;
+      this.setState(_defineProperty({}, name, value));
     }
   }, {
-    key: "load",
-    value: function load() {
-      var downloadLists = {};
-      this.getLists();
-      for (var key in paths) {
-        this.documents[key] = this.fstore.doc(paths[key]).get();
-      }
+    key: 'showRest',
+    value: function showRest(onChangeEvent) {
+      var inputText = onChangeEvent.target.value;
+      var shouldBeVisible = inputText != '';
+      this.setState({ formVisibility: shouldBeVisible });
+    }
+  }, {
+    key: 'sendUpdate',
+    value: function sendUpdate(event) {
+      event.preventDefault();
+      console.log(this.state);
+      var listObject = {};
+      listObject.name = this.state.formText;
+      listObject.default = this.state.formDefault;
+      listObject.order = this.getSerial();
+      listObject.status = false;
+      listObject.since = "2018-1-1";
+      this.addToDB(listObject);
+    }
+  }, {
+    key: 'getSerial',
+    value: function getSerial() {
+      var now = new Date();
+      return now.getTime();
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setClass(false);
+    }
+  }, {
+    key: 'addToDB',
+    value: function addToDB(listObject) {
+      var uniqueID = this.getSerial() + "";
+      console.log(listObject);
+      console.log(this.props.path);
+      this.updateDB(this.props.path + '.' + uniqueID, listObject);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'form',
+          { className: this.state.class },
+          _react2.default.createElement(
+            'div',
+            { className: 'listItemNewForm' },
+            _react2.default.createElement('input', {
+              type: 'text',
+              onChange: function onChange(event) {
+                _this2.showRest(event);
+                _this2.form(event);
+              },
+              name: 'formText'
+            }),
+            _react2.default.createElement(
+              'div',
+              { className: this.state.formVisibility ? 'listItemNew' : 'displayNone' },
+              _react2.default.createElement('input', {
+                type: 'checkbox',
+                checked: this.state.formDefault,
+                name: 'formDefault',
+                onChange: this.form
+              }),
+              _react2.default.createElement(
+                'p',
+                null,
+                'Checked by Default'
+              ),
+              _react2.default.createElement('input', {
+                type: 'submit',
+                onClick: this.sendUpdate.bind(this)
+              })
+            )
+          )
+        )
+      );
     }
   }]);
 
-  function Database() {
-    _classCallCheck(this, Database);
+  return ListItemNew;
+}(_ListItem3.default);
 
-    this.paths = paths;
-    this.documents = {};
-    this.fstore = firebase.firestore();
-    this.getLists = this.getLists.bind(this);
-    this.update = this.update.bind(this);
-    this.isToday = this.isToday.bind(this);
-    this.getDateString = this.getDateString.bind(this);
-    this.getLists();
-  }
-
-  return Database;
-}();
-
-exports.default = Database;
+exports.default = ListItemNew;
 
 /***/ }),
-/* 31 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18587,13 +19096,13 @@ var Welcome = function (_React$Component) {
 exports.default = Welcome;
 
 /***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */,
 /* 35 */,
 /* 36 */,
 /* 37 */,
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18609,7 +19118,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Database = __webpack_require__(30);
+var _Database = __webpack_require__(15);
 
 var _Database2 = _interopRequireDefault(_Database);
 
@@ -18621,449 +19130,30 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ListItem = function (_React$Component) {
-  _inherits(ListItem, _React$Component);
+var DBCComponent = function (_React$Component) {
+  _inherits(DBCComponent, _React$Component);
 
-  function ListItem(props) {
-    _classCallCheck(this, ListItem);
+  function DBCComponent(props) {
+    _classCallCheck(this, DBCComponent);
 
-    var _this = _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (DBCComponent.__proto__ || Object.getPrototypeOf(DBCComponent)).call(this, props));
 
-    _this.state = {};
     _this.Database = new _Database2.default();
-    _this.state.status = _this.getStatusFromDb();
     return _this;
   }
 
-  _createClass(ListItem, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.setClass(this.state.status);
-    }
-  }, {
-    key: 'getStatusFromDb',
-    value: function getStatusFromDb() {
-      var isOK = this.Database.isToday(this.props.lastStatusUpdate) ? this.props.lastStatus : false;
-      return isOK || this.props.default;
-    }
-  }, {
+  _createClass(DBCComponent, [{
     key: 'updateDB',
     value: function updateDB(thePath, theValue) {
       this.Database.update(this.Database.paths.lists, thePath, theValue);
-    }
-  }, {
-    key: 'setClass',
-    value: function setClass(isChecked) {
-      var checked = isChecked ? ' isChecked' : '';
-      this.setState({ class: 'listItem' + checked });
-    }
-  }, {
-    key: 'checkboxClick',
-    value: function checkboxClick(e) {
-      var notStatus = !this.state.status;
-      this.setState({ status: notStatus });
-      var data = this.props.data;
-      data.status = notStatus;
-      data.since = this.Database.getDateString();
-      data.order = this.props.orderNumber;
-      this.updateDB(this.props.path, data);
-      this.setClass(notStatus);
-    }
-  }, {
-    key: 'delete',
-    value: function _delete() {
-      this.updateDB(this.props.path, "DEL");
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'li',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: this.state.class },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement('input', {
-              onChange: this.checkboxClick.bind(this),
-              type: 'checkbox',
-              checked: this.state.status,
-              value: this.state.status
-            }),
-            this.props.name
-          ),
-          _react2.default.createElement(
-            'button',
-            {
-              className: this.props.modifiable ? "" : "displayNone",
-              onClick: this.delete.bind(this)
-            },
-            'Del'
-          )
-        )
-      );
+      this.props.update();
     }
   }]);
 
-  return ListItem;
+  return DBCComponent;
 }(_react2.default.Component);
 
-exports.default = ListItem;
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-		value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _ListItem = __webpack_require__(38);
-
-var _ListItem2 = _interopRequireDefault(_ListItem);
-
-var _ListItemNew = __webpack_require__(40);
-
-var _ListItemNew2 = _interopRequireDefault(_ListItemNew);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var List = function (_React$Component) {
-		_inherits(List, _React$Component);
-
-		function List() {
-				_classCallCheck(this, List);
-
-				var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this));
-
-				_this.size = 0;
-				_this.state = { modifiable: false };
-				return _this;
-		}
-
-		_createClass(List, [{
-				key: "newItemListItem",
-				value: function newItemListItem() {
-						return _react2.default.createElement(_ListItemNew2.default, {
-								currentSize: this.size,
-								key: "newOne",
-								name: "new",
-								"default": "false",
-								lastStatusUpdate: "2018-1-1",
-								lastStatus: "false",
-								path: this.props.path
-						});
-				}
-		}, {
-				key: "li",
-				value: function li(list, key) {
-						var order = list.order ? list.order : 4444;
-						return _react2.default.createElement(_ListItem2.default, {
-								modifiable: this.state.modifiable,
-								key: key,
-								data: list,
-								orderNumber: list.order,
-								name: list.name,
-								"default": list.default,
-								lastStatusUpdate: list.since,
-								lastStatus: list.status,
-								path: this.props.path + "." + key
-						});
-				}
-
-				//basically held eg ad eg verdi ad
-				//hafa order a hverjum einasta og sidan
-				//uppfaera alla
-
-				//eg er samt ad paela, thad verdur jafn morg request og
-				//fjoldi item-a a listanum svo thad verdur alls ekki efficient
-				//nema kannski madur myndi taka allan listann og vera med "fix order"
-
-				//listinn er eftir allt saman a "List.js" svo thad aetti ekki ad
-				//vera of mikid ves thegar madur er kominn inn i thetta.
-
-				//held ad thad se besta approachid
-
-				//TODO:
-				//Drag and drop re-ordering
-				//Editing mode to view the delete button and to modify the 'default'
-				//option
-				//Later add a profile for each
-
-		}, {
-				key: "modifyBoxClick",
-				value: function modifyBoxClick(e) {
-						this.setState({ modifiable: !this.state.modifiable });
-				}
-		}, {
-				key: "renderListItems",
-				value: function renderListItems() {
-						var regex = /^[$]/;
-						var setupData = this.props.listData;
-						var li_Array = [];
-						this.size = Object.keys(setupData).length;
-						for (var key in setupData) {
-								if (key.match(regex)) continue;
-								var setup = setupData[key];
-								li_Array.push(this.li(setup, key));
-						}
-						li_Array.sort(function (a, b) {
-								var numA = a.props.orderNumber;
-								var numB = b.props.orderNumber;
-								if (numA < numB) return -1;
-								if (numA > numB) return 1;
-								return 0;
-						});
-						return li_Array;
-				}
-		}, {
-				key: "render",
-				value: function render() {
-						return _react2.default.createElement(
-								"div",
-								{ className: "todoList" },
-								_react2.default.createElement(
-										"div",
-										{ className: "listHeader" },
-										_react2.default.createElement(
-												"h1",
-												null,
-												" ",
-												this.props.listData.$name,
-												" "
-										),
-										"Modify",
-										_react2.default.createElement("input", {
-												type: "checkbox",
-												onChange: this.modifyBoxClick.bind(this),
-												checked: this.state.modifiable,
-												value: this.state.modifiable
-										})
-								),
-								_react2.default.createElement(
-										"ol",
-										null,
-										this.renderListItems(),
-										this.newItemListItem()
-								)
-						);
-				}
-		}]);
-
-		return List;
-}(_react2.default.Component);
-
-exports.default = List;
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _ListItem2 = __webpack_require__(38);
-
-var _ListItem3 = _interopRequireDefault(_ListItem2);
-
-var _ListBean = __webpack_require__(41);
-
-var _ListBean2 = _interopRequireDefault(_ListBean);
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ListItemNew = function (_ListItem) {
-  _inherits(ListItemNew, _ListItem);
-
-  function ListItemNew(props) {
-    _classCallCheck(this, ListItemNew);
-
-    var _this = _possibleConstructorReturn(this, (ListItemNew.__proto__ || Object.getPrototypeOf(ListItemNew)).call(this, props));
-
-    _this.state.formVisibility = false;
-    _this.state.formDefault = false;
-    _this.showRest = _this.showRest.bind(_this);
-    _this.form = _this.form.bind(_this);
-    return _this;
-  }
-
-  _createClass(ListItemNew, [{
-    key: "form",
-    value: function form(event) {
-      var target = event.target;
-      var name = target.name;
-      var value = target.type == 'checkbox' ? target.checked : target.value;
-      this.setState(_defineProperty({}, name, value));
-    }
-  }, {
-    key: "showRest",
-    value: function showRest(onChangeEvent) {
-      var inputText = onChangeEvent.target.value;
-      var shouldBeVisible = inputText != '';
-      this.setState({ formVisibility: shouldBeVisible });
-    }
-  }, {
-    key: "sendUpdate",
-    value: function sendUpdate(event) {
-      event.preventDefault();
-      console.log(this.state);
-      var listObject = {};
-      listObject.name = this.state.formText;
-      listObject.default = this.state.formDefault;
-      listObject.order = this.getSerial();
-      listObject.status = false;
-      listObject.since = "2018-1-1";
-      this.addToDB(listObject);
-    }
-  }, {
-    key: "getSerial",
-    value: function getSerial() {
-      var now = new Date();
-      return now.getTime();
-    }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.setClass(false);
-    }
-  }, {
-    key: "addToDB",
-    value: function addToDB(listObject) {
-      var uniqueID = this.getSerial() + "";
-      console.log(listObject);
-      console.log(this.props.path);
-      this.updateDB(this.props.path + '.' + uniqueID, listObject);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        "li",
-        null,
-        _react2.default.createElement(
-          "form",
-          { className: this.state.class },
-          _react2.default.createElement(
-            "div",
-            { className: "listItemNewForm" },
-            _react2.default.createElement("input", {
-              type: "text",
-              onChange: function onChange(event) {
-                _this2.showRest(event);
-                _this2.form(event);
-              },
-              name: "formText"
-            }),
-            _react2.default.createElement(
-              "div",
-              { className: this.state.formVisibility ? 'listItemNew' : 'displayNone' },
-              _react2.default.createElement("input", {
-                type: "checkbox",
-                checked: this.state.formDefault,
-                name: "formDefault",
-                onChange: this.form
-              }),
-              _react2.default.createElement(
-                "p",
-                null,
-                "Checked by Default"
-              ),
-              _react2.default.createElement("input", {
-                type: "submit",
-                onClick: this.sendUpdate.bind(this)
-              })
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ListItemNew;
-}(_ListItem3.default);
-
-exports.default = ListItemNew;
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ListBean = function () {
-	function ListBean() {
-		_classCallCheck(this, ListBean);
-
-		this.default = true;
-		this.name = "Name Undefined";
-		this.since = "2018-06-06";
-		this.status = false;
-		this.numberOnList = 0;
-		this.copy = this.copy.bind(this);
-	}
-
-	_createClass(ListBean, [{
-		key: "copy",
-		value: function copy() {
-			var lb = new ListBean();
-			lb.default = this.default;
-			lb.name = this.name;
-			lb.since = this.since;
-			lb.status = this.status;
-			lb.numberOnList = this.numberOnList;
-		}
-	}]);
-
-	return ListBean;
-}();
-
-exports.default = ListBean;
+exports.default = DBCComponent;
 
 /***/ })
 /******/ ]);
